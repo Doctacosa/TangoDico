@@ -4,7 +4,9 @@
 import { onMounted, ref } from 'vue';
 import initSqlJs from 'sql.js';
 
-const rows = ref([]);
+const matches = ref([]);
+const types = ref([]);
+const lessons = ref([]);
 
 //Set the reactive state
 const keyword = ref("")
@@ -37,7 +39,7 @@ async function runSearch() {
 	if (result.length > 0) {
 		const columns = result[0].columns;
 		const values = result[0].values;
-		rows.value = values.map(row =>
+		matches.value = values.map(row =>
 			Object.fromEntries(row.map((val, i) => [columns[i], val]))
 		);
 	}
@@ -46,6 +48,42 @@ async function runSearch() {
 
 onMounted(async () => {
 	console.log("onMounted");
+
+	const SQL = await initSqlJs({
+		locateFile: file => `https://sql.js.org/dist/${file}`
+	});
+
+	const response = await fetch('/jpdict.db');	//Chemin relatif depuis public/
+	const buffer = await response.arrayBuffer();
+	const db = new SQL.Database(new Uint8Array(buffer));
+
+	let result = db.exec(`
+		SELECT DISTINCT TRIM(type) AS type
+		FROM words
+		ORDER BY type ASC
+	`);
+
+	if (result.length > 0) {
+		const columns = result[0].columns;
+		const values = result[0].values;
+		types.value = values.map(row =>
+			Object.fromEntries(row.map((val, i) => [columns[i], val]))
+		);
+	}
+
+	result = db.exec(`
+		SELECT DISTINCT TRIM(lesson) AS lesson
+		FROM words
+		ORDER BY lesson ASC
+	`);
+
+	if (result.length > 0) {
+		const columns = result[0].columns;
+		const values = result[0].values;
+		lessons.value = values.map(row =>
+			Object.fromEntries(row.map((val, i) => [columns[i], val]))
+		);
+	}
 });
 </script>
 
@@ -53,11 +91,23 @@ onMounted(async () => {
 <template>
 	<div class="dictionary">
 		<input type="text" name="keyword" placeholder="Search" v-model="keyword" @change="runSearch" />
+		<br />
+		<select>
+			<option key="">All</option>
+			<option v-for="row in types" :key="row.type">{{ row.type }}</option>
+		</select>
+		<select>
+			<option key="">All</option>
+			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
+		</select>
 
 		<table class="words_list">
-			<tr v-for="row in rows" :key="row.id">
+			<tr v-for="row in matches" :key="row.id">
 				<td>{{ row.meaning }}</td>
+				<td>{{ row.kanji }}</td>
 				<td>{{ row.kana }}</td>
+				<td>{{ row.type }}</td>
+				<td>{{ row.lesson }}</td>
 			</tr>
 		</table>
 
