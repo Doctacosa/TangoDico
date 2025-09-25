@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
 	<header>
-		<img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+		<img src="@/assets/logo.png" alt="Logo" class="logo" width="125" height="125" />
 		<h1>Dictionary</h1>
 	</header>
 
@@ -39,5 +39,9 @@ nav {
 	font-size: 12px;
 	text-align: center;
 	margin-top: 2rem;
+
+	> * {
+		padding: 8px;
+	}
 }
 </style>

@@ -49,18 +49,32 @@ onMounted(async () => {
 });
 </script>
 
+
 <template>
+	<div class="dictionary">
+		<input type="text" name="keyword" placeholder="Search" v-model="keyword" @change="runSearch" />
 
-	<input type="text" name="keyword" placeholder="Search" v-model="keyword" @change="runSearch" />
+		<table class="words_list">
+			<tr v-for="row in rows" :key="row.id">
+				<td>{{ row.meaning }}</td>
+				<td>{{ row.kana }}</td>
+			</tr>
+		</table>
 
-	<table>
-		<tr v-for="row in rows" :key="row.id">
-			<td>{{ row.meaning }}</td>
-			<td>{{ row.kana }}</td>
-		</tr>
-	</table>
-
+	</div>
 </template>
 
+
 <style scoped>
+.words_list {
+	margin: 20px auto 20px auto;
+}
+
+.words_list {
+	/*line-height: 1.6;*/
+
+	td {
+		padding: 8px;
+	}
+}
 </style>
