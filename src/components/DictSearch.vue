@@ -52,7 +52,7 @@ async function runSearch() {
 		WHERE 1=1
 		` + sql_where + `
 		ORDER BY meaning ASC, kana ASC
-		LIMIT 5
+		LIMIT 100
 	`;
 	const result = db.exec(sql);
 
@@ -62,6 +62,8 @@ async function runSearch() {
 		matches.value = values.map(row =>
 			Object.fromEntries(row.map((val, i) => [columns[i], val]))
 		);
+	} else {
+		matches.value = [];
 	}
 }
 
@@ -129,15 +131,17 @@ onMounted(async () => {
 			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
 		</select>
 
-		<table class="words_list">
+		<table v-if="matches.length" class="words_list">
 			<tr v-for="row in matches" :key="row.id">
 				<td>{{ row.meaning }}</td>
 				<td>{{ row.kanji }}</td>
 				<td>{{ row.kana }}</td>
-				<td>{{ row.type }}</td>
+				<td>{{ row.type }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
 				<td>{{ row.lesson }}</td>
 			</tr>
 		</table>
+
+		<div v-if="!matches.length" class="alert-info">No matches</div>
 
 	</div>
 </template>
