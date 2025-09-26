@@ -8,15 +8,23 @@ const matches = ref([]);
 const types = ref([]);
 const lessons = ref([]);
 
+//TODO: Check if plain definition or reactive state is better
+let lessons_min = 0;
+let lessons_max = 99;
+
+let search_type = "";
+let search_lesson_min = "";
+let search_lesson_max = "";
+
 //Set the reactive state
-const keyword = ref("")
+const keyword = ref("");
 
 
 //Functions
 async function runSearch() {
 
-	if (keyword.value == "")
-		return;
+	//if (keyword.value == "")
+	//	return;
 
 	const SQL = await initSqlJs({
 		locateFile: file => `https://sql.js.org/dist/${file}`
@@ -26,15 +34,27 @@ async function runSearch() {
 	const buffer = await response.arrayBuffer();
 	const db = new SQL.Database(new Uint8Array(buffer));
 
-	const result = db.exec(`
+	let sql_where = '';
+	if (keyword.value != "")
+		sql_where += '	AND meaning LIKE "%' + keyword.value + '%"';
+	if (search_type != "")
+		sql_where += '	AND type = "' + search_type + '"';
+	if (search_lesson_min != "")
+		sql_where += '	AND lesson >= ' + search_lesson_min + '';
+	if (search_lesson_max != "")
+		sql_where += '	AND lesson <= ' + search_lesson_max + '';
+
+	const sql = `
 		SELECT *
 		FROM words
 		LEFT JOIN words__en
 		ON words.id = words__en.id
-		WHERE meaning LIKE "%` + keyword.value + `%"
+		WHERE 1=1
+		` + sql_where + `
 		ORDER BY meaning ASC, kana ASC
 		LIMIT 5
-	`);
+	`;
+	const result = db.exec(sql);
 
 	if (result.length > 0) {
 		const columns = result[0].columns;
@@ -84,6 +104,10 @@ onMounted(async () => {
 			Object.fromEntries(row.map((val, i) => [columns[i], val]))
 		);
 	}
+
+	//TODO: min(), max() based on actual data
+	lessons_min = 0;
+	lessons_max = 23;
 });
 </script>
 
@@ -92,12 +116,16 @@ onMounted(async () => {
 	<div class="dictionary">
 		<input type="text" name="keyword" placeholder="Search" v-model="keyword" @change="runSearch" />
 		<br />
-		<select>
-			<option key="">All</option>
+		<select v-model="search_type" @change="runSearch">
+			<option value="">All</option>
 			<option v-for="row in types" :key="row.type">{{ row.type }}</option>
 		</select>
-		<select>
-			<option key="">All</option>
+		<select v-model="search_lesson_min" @change="runSearch">
+			<option value="">All</option>
+			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
+		</select>
+		<select v-model="search_lesson_max" @change="runSearch">
+			<option value="">All</option>
 			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
 		</select>
 
