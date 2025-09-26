@@ -58,7 +58,7 @@ onMounted(async () => {
 	const db = new SQL.Database(new Uint8Array(buffer));
 
 	let result = db.exec(`
-		SELECT DISTINCT TRIM(type) AS type
+		SELECT DISTINCT type
 		FROM words
 		ORDER BY type ASC
 	`);
@@ -72,7 +72,7 @@ onMounted(async () => {
 	}
 
 	result = db.exec(`
-		SELECT DISTINCT TRIM(lesson) AS lesson
+		SELECT DISTINCT lesson
 		FROM words
 		ORDER BY lesson ASC
 	`);
