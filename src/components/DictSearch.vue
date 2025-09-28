@@ -12,9 +12,9 @@ const lessons = ref([]);
 let lessons_min = 0;
 let lessons_max = 99;
 
-let search_type = "";
-let search_lesson_min = "";
-let search_lesson_max = "";
+const search_type = "";
+const search_lesson_min = "";
+const search_lesson_max = "";
 
 //Set the reactive state
 const keyword = ref("");
@@ -36,7 +36,7 @@ async function runSearch() {
 
 	let sql_where = '';
 	if (keyword.value != "")
-		sql_where += '	AND meaning LIKE "%' + keyword.value + '%"';
+		sql_where += '	AND meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%"';
 	if (search_type != "")
 		sql_where += '	AND type = "' + search_type + '"';
 	if (search_lesson_min != "")
@@ -47,8 +47,8 @@ async function runSearch() {
 	const sql = `
 		SELECT *
 		FROM words
-		LEFT JOIN words__en
-		ON words.id = words__en.id
+		LEFT JOIN words__en AS words_lang
+		ON words.id = words_lang.id
 		WHERE 1=1
 		` + sql_where + `
 		ORDER BY meaning ASC, kana ASC
