@@ -51,7 +51,7 @@ async function runSearch() {
 		ON words.id = words_lang.id
 		WHERE 1=1
 		` + sql_where + `
-		ORDER BY meaning ASC, kana ASC
+		ORDER BY meaning COLLATE NOCASE ASC, kana COLLATE NOCASE ASC
 		LIMIT 100
 	`;
 	const result = db.exec(sql);
@@ -82,7 +82,7 @@ onMounted(async () => {
 	let result = db.exec(`
 		SELECT DISTINCT type
 		FROM words
-		ORDER BY type ASC
+		ORDER BY type COLLATE NOCASE ASC
 	`);
 
 	if (result.length > 0) {
@@ -96,7 +96,7 @@ onMounted(async () => {
 	result = db.exec(`
 		SELECT DISTINCT lesson
 		FROM words
-		ORDER BY lesson ASC
+		ORDER BY lesson COLLATE NOCASE ASC
 	`);
 
 	if (result.length > 0) {
