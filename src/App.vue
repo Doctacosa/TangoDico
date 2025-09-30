@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ useScope: 'global' })
+
 import { RouterLink, RouterView } from 'vue-router'
 //import HelloWorld from './components/HelloWorld.vue'
 </script>
@@ -7,7 +11,8 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
 	<header>
 		<img src="@/assets/logo.png" alt="Logo" class="logo" width="125" height="125" />
-		<h1>Dictionary</h1>
+		<h1>{{ t("nav.dictionary") }}</h1>
+
 	</header>
 
 	<RouterView />
@@ -15,8 +20,8 @@ import { RouterLink, RouterView } from 'vue-router'
 	<footer>
 		<div class="wrapper">
 			<nav>
-				<RouterLink to="/">Home</RouterLink>
-				<RouterLink to="/about">About</RouterLink>
+				<RouterLink to="/">{{ t("nav.home") }}</RouterLink>
+				<RouterLink to="/about">{{ t("nav.about") }}</RouterLink>
 			</nav>
 		</div>
 	</footer>

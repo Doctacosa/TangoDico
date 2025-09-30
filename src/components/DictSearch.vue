@@ -3,6 +3,9 @@
 
 import { onMounted, ref } from 'vue';
 import initSqlJs from 'sql.js';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ useScope: 'global' })
 
 const matches = ref([]);
 const types = ref([]);
@@ -47,7 +50,7 @@ async function runSearch() {
 	const sql = `
 		SELECT *
 		FROM words
-		LEFT JOIN words__en AS words_lang
+		LEFT JOIN words__fr AS words_lang
 		ON words.id = words_lang.id
 		WHERE 1=1
 		` + sql_where + `
@@ -116,18 +119,18 @@ onMounted(async () => {
 
 <template>
 	<div class="dictionary">
-		<input type="text" name="keyword" placeholder="Search" v-model="keyword" @change="runSearch" />
+		<input type="text" name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" />
 		<br />
 		<select v-model="search_type" @change="runSearch">
-			<option value="">All</option>
+			<option value="">{{ t("filter.all") }}</option>
 			<option v-for="row in types" :key="row.type">{{ row.type }}</option>
 		</select>
 		<select v-model="search_lesson_min" @change="runSearch">
-			<option value="">All</option>
+			<option value="">{{ t("filter.all") }}</option>
 			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
 		</select>
 		<select v-model="search_lesson_max" @change="runSearch">
-			<option value="">All</option>
+			<option value="">{{ t("filter.all") }}</option>
 			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
 		</select>
 
@@ -141,7 +144,7 @@ onMounted(async () => {
 			</tr>
 		</table>
 
-		<div v-if="!matches.length" class="alert-info">No matches</div>
+		<div v-if="!matches.length" class="alert-info">{{ t("search.no_results") }}</div>
 
 	</div>
 </template>
