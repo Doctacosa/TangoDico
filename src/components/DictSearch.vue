@@ -50,7 +50,7 @@ async function runSearch() {
 	const sql = `
 		SELECT *
 		FROM words
-		LEFT JOIN words__fr AS words_lang
+		INNER JOIN words__fr AS words_lang
 		ON words.id = words_lang.id
 		WHERE 1=1
 		` + sql_where + `
