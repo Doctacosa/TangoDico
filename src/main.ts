@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import PrimeVue from 'primevue/config';
 import router from './router'
+import VueMatomo from 'vue-matomo'
 import App from './App.vue'
 
 //import { definePreset, palette } from '@primevue/themes';
@@ -41,6 +42,40 @@ const app = createApp(App)
 
 app.use(i18n)
 app.use(router)
+
+app.use(VueMatomo, {
+	// Configure your matomo server and site by providing
+	host: 'https://apps.interordi.com/matomo',
+	siteId: 13,
+
+	// Enables automatically registering pageviews on the router
+	router: router,
+
+	// Enables link tracking on regular links. Note that this won't
+	// work for routing links (ie. internal Vue router links)
+	// Default: true
+	enableLinkTracking: true,
+
+	// Run Matomo without cookies
+	// Default: false
+	disableCookies: false,
+
+	// Require consent before sending tracking information to matomo
+	// Default: false
+	requireConsent: false,
+
+	// Require consent before creating matomo session cookie
+	// Default: false
+	requireCookieConsent: false,
+
+	// Enable the heartbeat timer (https://developer.matomo.org/guides/tracking-javascript-guide#accurately-measure-the-time-spent-on-each-page)
+	// Default: false
+	enableHeartBeatTimer: false,
+
+	// Set the heartbeat timer interval
+	// Default: 15
+	heartBeatTimerInterval: 15,
+});
 
 app.use(PrimeVue, {
 	theme: {
