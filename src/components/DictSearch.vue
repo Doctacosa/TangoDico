@@ -38,7 +38,7 @@ async function runSearch() {
 
 	let sql_where = '';
 	if (keyword.value != "")
-		sql_where += '	AND meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%"';
+		sql_where += '	AND (meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%")';
 	if (search_type.value != "")
 		sql_where += '	AND type = "' + search_type.value + '"';
 	if (search_lesson_min.value != "")
