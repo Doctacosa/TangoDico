@@ -15,9 +15,9 @@ const lessons = ref([]);
 let lessons_min = 0;
 let lessons_max = 99;
 
-const search_type = "";
-const search_lesson_min = "";
-const search_lesson_max = "";
+const search_type = ref("");
+const search_lesson_min = ref("");
+const search_lesson_max = ref("");
 
 //Set the reactive state
 const keyword = ref("");
@@ -25,7 +25,6 @@ const keyword = ref("");
 
 //Functions
 async function runSearch() {
-
 	//if (keyword.value == "")
 	//	return;
 
@@ -40,12 +39,12 @@ async function runSearch() {
 	let sql_where = '';
 	if (keyword.value != "")
 		sql_where += '	AND meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%"';
-	if (search_type != "")
-		sql_where += '	AND type = "' + search_type + '"';
-	if (search_lesson_min != "")
-		sql_where += '	AND lesson >= ' + search_lesson_min + '';
-	if (search_lesson_max != "")
-		sql_where += '	AND lesson <= ' + search_lesson_max + '';
+	if (search_type.value != "")
+		sql_where += '	AND type = "' + search_type.value + '"';
+	if (search_lesson_min.value != "")
+		sql_where += '	AND lesson >= ' + search_lesson_min.value + '';
+	if (search_lesson_max.value != "")
+		sql_where += '	AND lesson <= ' + search_lesson_max.value + '';
 
 	const sql = `
 		SELECT *
@@ -72,8 +71,6 @@ async function runSearch() {
 
 
 onMounted(async () => {
-	console.log("onMounted");
-
 	const SQL = await initSqlJs({
 		locateFile: file => `https://sql.js.org/dist/${file}`
 	});
@@ -83,31 +80,38 @@ onMounted(async () => {
 	const db = new SQL.Database(new Uint8Array(buffer));
 
 	let result = db.exec(`
-		SELECT DISTINCT type
+		SELECT DISTINCT type AS key
 		FROM words
 		ORDER BY type COLLATE NOCASE ASC
 	`);
 
 	if (result.length > 0) {
-		const columns = result[0].columns;
+		//const columns = result[0].columns;
 		const values = result[0].values;
+		types.value.push({key: t("filter.all"), value: ""});
+		for (const x in values) {
+			types.value.push({key: values[x][0], value: values[x][0]});
+		}
+		/*
 		types.value = values.map(row =>
 			Object.fromEntries(row.map((val, i) => [columns[i], val]))
 		);
+		*/
 	}
 
 	result = db.exec(`
-		SELECT DISTINCT lesson
+		SELECT DISTINCT lesson AS key
 		FROM words
 		ORDER BY lesson COLLATE NOCASE ASC
 	`);
 
 	if (result.length > 0) {
-		const columns = result[0].columns;
+		//const columns = result[0].columns;
 		const values = result[0].values;
-		lessons.value = values.map(row =>
-			Object.fromEntries(row.map((val, i) => [columns[i], val]))
-		);
+		lessons.value.push({key: t("filter.all"), value: ""});
+		for (const x in values) {
+			lessons.value.push({key: values[x][0], value: values[x][0]});
+		}
 	}
 
 	//TODO: min(), max() based on actual data
@@ -119,20 +123,14 @@ onMounted(async () => {
 
 <template>
 	<div class="dictionary">
-		<input type="text" name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" />
+		<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" />
 		<br />
-		<select v-model="search_type" @change="runSearch">
-			<option value="">{{ t("filter.all") }}</option>
-			<option v-for="row in types" :key="row.type">{{ row.type }}</option>
-		</select>
-		<select v-model="search_lesson_min" @change="runSearch">
-			<option value="">{{ t("filter.all") }}</option>
-			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
-		</select>
-		<select v-model="search_lesson_max" @change="runSearch">
-			<option value="">{{ t("filter.all") }}</option>
-			<option v-for="row in lessons" :key="row.type">{{ row.lesson }}</option>
-		</select>
+		<Select v-model="search_type" :options="types" optionLabel="key" optionValue="value" @change="runSearch">
+		</Select>
+		<Select v-model="search_lesson_min" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
+		</Select>
+		<Select v-model="search_lesson_max" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
+		</Select>
 
 		<table v-if="matches.length" class="words_list">
 			<tr v-for="row in matches" :key="row.id">
