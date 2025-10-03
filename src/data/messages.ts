@@ -10,6 +10,10 @@ const messages = {
 		search: {
 			no_results: "No matches",
 			placeholder: "Complete or partial word",
+			word: "Word",
+			type: "Type",
+			lesson_min: "Lesson min",
+			lesson_max: "Lesson max",
 		},
 		nav: {
 			about: "About",
@@ -27,6 +31,10 @@ const messages = {
 		search: {
 			no_results: "Aucun résultat",
 			placeholder: "Mot complet ou partiel",
+			word: "Mot",
+			type: "Type",
+			lesson_min: "Leçon min",
+			lesson_max: "Leçon max",
 		},
 		nav: {
 			about: "À propos",

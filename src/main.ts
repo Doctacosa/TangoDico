@@ -12,7 +12,9 @@ import Aura from '@primeuix/themes/aura';
 
 import messages from './data/messages.ts'
 
+import IftaLabel from 'primevue/iftalabel';
 import InputText from 'primevue/inputtext';
+import Message from 'primevue/message';
 import Select from 'primevue/select';
 
 
@@ -87,7 +89,9 @@ app.use(PrimeVue, {
 	}
 });
 
+app.component('IftaLabel', IftaLabel);
 app.component('InputText', InputText);
+app.component('Message', Message);
 app.component('Select', Select);
 
 app.provide('t', i18n.global.t);

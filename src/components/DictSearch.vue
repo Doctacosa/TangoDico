@@ -123,14 +123,30 @@ onMounted(async () => {
 
 <template>
 	<div class="dictionary">
-		<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" />
-		<br />
-		<Select v-model="search_type" :options="types" optionLabel="key" optionValue="value" @change="runSearch">
-		</Select>
-		<Select v-model="search_lesson_min" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
-		</Select>
-		<Select v-model="search_lesson_max" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
-		</Select>
+		<div class="search_settings">
+			<IftaLabel>
+				<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" fluid />
+				<label>{{ t("search.word") }}</label>
+			</IftaLabel>
+			
+			<div class="subsettings">
+				<IftaLabel>
+					<Select v-model="search_type" :options="types" optionLabel="key" optionValue="value" @change="runSearch">
+					</Select>
+					<label>{{ t("search.type") }}</label>
+				</IftaLabel>
+				<IftaLabel>
+					<Select v-model="search_lesson_min" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
+					</Select>
+					<label>{{ t("search.lesson_min") }}</label>
+				</IftaLabel>
+				<IftaLabel>
+					<Select v-model="search_lesson_max" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
+					</Select>
+					<label>{{ t("search.lesson_max") }}</label>
+				</IftaLabel>
+			</div>
+		</div>
 
 		<table v-if="matches.length" class="words_list">
 			<tr v-for="row in matches" :key="row.id">
@@ -142,13 +158,29 @@ onMounted(async () => {
 			</tr>
 		</table>
 
-		<div v-if="!matches.length" class="alert-info">{{ t("search.no_results") }}</div>
+		<Message v-if="!matches.length">{{ t("search.no_results") }}</Message>
 
 	</div>
 </template>
 
 
 <style scoped>
+
+.dictionary {
+	text-align: left;
+}
+
+.search_settings {
+	margin: 0 auto;
+	max-width: 400px;
+	text-align: left;
+}
+
+.subsettings {
+	display: flex;
+	justify-content: space-around;
+}
+
 .words_list {
 	margin: 20px auto 20px auto;
 }
@@ -159,5 +191,9 @@ onMounted(async () => {
 	td {
 		padding: 8px;
 	}
+}
+
+.p-message {
+	margin-top: 30px;
 }
 </style>
