@@ -90,7 +90,7 @@ onMounted(async () => {
 		const values = result[0].values;
 		types.value.push({key: t("filter.all"), value: ""});
 		for (const x in values) {
-			types.value.push({key: values[x][0], value: values[x][0]});
+			types.value.push({key: t("word_type." + values[x][0]), value: values[x][0]});
 		}
 		/*
 		types.value = values.map(row =>
@@ -153,7 +153,7 @@ onMounted(async () => {
 				<td>{{ row.meaning }}</td>
 				<td>{{ row.kanji }}</td>
 				<td>{{ row.kana }}</td>
-				<td>{{ row.type }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
+				<td>{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
 				<td>{{ row.lesson }}</td>
 			</tr>
 		</table>

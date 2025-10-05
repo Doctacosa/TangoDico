@@ -15,6 +15,16 @@ const messages = {
 			lesson_min: "Lesson min",
 			lesson_max: "Lesson max",
 		},
+		word_type: {
+			adj: "Adjective",
+			adv: "Adverb",
+			exp: "Expression",
+			n: "Noun",
+			part: "Particule",
+			pre: "Prefix",
+			suf: "Suffix",
+			v: "Verb",
+		},
 		nav: {
 			about: "About",
 			dictionary: "Dictionary",
@@ -35,6 +45,16 @@ const messages = {
 			type: "Type",
 			lesson_min: "Leçon min",
 			lesson_max: "Leçon max",
+		},
+		word_type: {
+			adj: "Adjectif",
+			adv: "Adverbe",
+			exp: "Expression",
+			n: "Nom",
+			part: "Particule",
+			pre: "Préfixe",
+			suf: "Suffixe",
+			v: "Verbe",
 		},
 		nav: {
 			about: "À propos",
