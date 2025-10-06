@@ -24,9 +24,15 @@ const keyword = ref("");
 
 
 //Functions
-async function runSearch() {
+async function runSearch(value_changed: string) {
 	//if (keyword.value == "")
 	//	return;
+
+	//Impose sane limits
+	if (value_changed == 'search_lesson_min' && search_lesson_min.value > search_lesson_max.value)
+		search_lesson_max.value = search_lesson_min.value;
+	else if (value_changed == 'search_lesson_max' && search_lesson_min.value > search_lesson_max.value)
+		search_lesson_min.value = search_lesson_max.value;
 
 	const SQL = await initSqlJs({
 		locateFile: file => `https://sql.js.org/dist/${file}`
@@ -39,11 +45,11 @@ async function runSearch() {
 	let sql_where = '';
 	if (keyword.value != "")
 		sql_where += '	AND (meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%")';
-	if (search_type.value != "")
+	if (search_type.value !== "")
 		sql_where += '	AND type = "' + search_type.value + '"';
-	if (search_lesson_min.value != "")
+	if (search_lesson_min.value !== "")
 		sql_where += '	AND lesson >= ' + search_lesson_min.value + '';
-	if (search_lesson_max.value != "")
+	if (search_lesson_max.value !== "")
 		sql_where += '	AND lesson <= ' + search_lesson_max.value + '';
 
 	const sql = `
@@ -141,7 +147,7 @@ onMounted(async () => {
 						:placeholder="t('filter.all')"
 						optionLabel="key"
 						optionValue="value"
-						@change="runSearch"
+						@change="runSearch('search_type')"
 					></Select>
 					<label>{{ t("search.type") }}</label>
 				</IftaLabel>
@@ -152,7 +158,7 @@ onMounted(async () => {
 						:placeholder="t('filter.all')"
 						optionLabel="key"
 						optionValue="value"
-						@change="runSearch"
+						@change="runSearch('search_lesson_min')"
 					></Select>
 					<label>{{ t("search.lesson_min") }}</label>
 				</IftaLabel>
@@ -163,7 +169,7 @@ onMounted(async () => {
 						:placeholder="t('filter.all')"
 						optionLabel="key"
 						optionValue="value"
-						@change="runSearch"
+						@change="runSearch('search_lesson_max')"
 					></Select>
 					<label>{{ t("search.lesson_max") }}</label>
 				</IftaLabel>
