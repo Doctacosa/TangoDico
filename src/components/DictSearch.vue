@@ -12,8 +12,8 @@ const types = ref([]);
 const lessons = ref([]);
 
 //TODO: Check if plain definition or reactive state is better
-let lessons_min = 0;
-let lessons_max = 99;
+let lessons_min = 999;
+let lessons_max = 0;
 
 const search_type = ref("");
 const search_lesson_min = ref("");
@@ -111,12 +111,14 @@ onMounted(async () => {
 		lessons.value.push({key: t("filter.all"), value: ""});
 		for (const x in values) {
 			lessons.value.push({key: values[x][0], value: values[x][0]});
+			if (lessons_min > values[x][0])
+				lessons_min = values[x][0];
+			if (lessons_max < values[x][0])
+				lessons_max = values[x][0];
 		}
 	}
 
-	//TODO: min(), max() based on actual data
-	lessons_min = 0;
-	lessons_max = 23;
+	runSearch();
 });
 </script>
 
@@ -124,25 +126,45 @@ onMounted(async () => {
 <template>
 	<div class="dictionary">
 		<div class="search_settings">
-			<IftaLabel>
-				<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" fluid />
-				<label>{{ t("search.word") }}</label>
-			</IftaLabel>
-			
+			<div class="settings">
+				<IftaLabel>
+					<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" fluid />
+					<label>{{ t("search.word") }}</label>
+				</IftaLabel>
+			</div>
+
 			<div class="subsettings">
 				<IftaLabel>
-					<Select v-model="search_type" :options="types" optionLabel="key" optionValue="value" @change="runSearch">
-					</Select>
+					<Select
+						v-model="search_type"
+						:options="types"
+						:placeholder="t('filter.all')"
+						optionLabel="key"
+						optionValue="value"
+						@change="runSearch"
+					></Select>
 					<label>{{ t("search.type") }}</label>
 				</IftaLabel>
 				<IftaLabel>
-					<Select v-model="search_lesson_min" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
-					</Select>
+					<Select
+						v-model="search_lesson_min"
+						:options="lessons"
+						:placeholder="t('filter.all')"
+						optionLabel="key"
+						optionValue="value"
+						@change="runSearch"
+					></Select>
 					<label>{{ t("search.lesson_min") }}</label>
 				</IftaLabel>
 				<IftaLabel>
-					<Select v-model="search_lesson_max" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
-					</Select>
+					<Select
+						v-model="search_lesson_max"
+						:options="lessons"
+						:placeholder="t('filter.all')"
+						optionLabel="key"
+						optionValue="value"
+						@change="runSearch"
+					></Select>
 					<label>{{ t("search.lesson_max") }}</label>
 				</IftaLabel>
 			</div>
@@ -179,6 +201,7 @@ onMounted(async () => {
 .subsettings {
 	display: flex;
 	justify-content: space-around;
+	margin-top: 12px;
 }
 
 .words_list {
@@ -191,6 +214,10 @@ onMounted(async () => {
 	td {
 		padding: 8px;
 	}
+}
+
+.p-select {
+	min-width: 110px;
 }
 
 .p-message {
