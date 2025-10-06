@@ -1,15 +1,23 @@
+<script setup lang="ts">
+//import HelloWorld from './components/HelloWorld.vue'
+
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ useScope: 'global' })
+</script>
+
+
 <template>
 	<div class="about">
-		<h1>This is an about page</h1>
+		<h2>{{ t("about.title") }}</h2>
+
+		<div v-html="t('about.description')"></div>
 	</div>
 </template>
 
+
 <style>
-@media (min-width: 1024px) {
-	.about {
-		min-height: 100vh;
-		display: flex;
-		align-items: center;
-	}
+.about {
+	text-align: left;
 }
 </style>
