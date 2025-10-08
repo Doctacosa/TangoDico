@@ -15,6 +15,23 @@ const messages = {
 			lesson_min: "Lesson min",
 			lesson_max: "Lesson max",
 		},
+		word_type: {
+			adj: "Adjective",
+			adv: "Adverb",
+			exp: "Expression",
+			n: "Noun",
+			part: "Particule",
+			pre: "Prefix",
+			suf: "Suffix",
+			v: "Verb",
+		},
+		about: {
+			title: "About",
+			description: `
+				<p>TangoVocab a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
+				<p>Cette application a été développée par <a href="https://www.interordi.com/" target="_blank">Stéphane Lemay</a>.</p>
+			`,
+		},
 		nav: {
 			about: "About",
 			dictionary: "Dictionary",
@@ -35,6 +52,23 @@ const messages = {
 			type: "Type",
 			lesson_min: "Leçon min",
 			lesson_max: "Leçon max",
+		},
+		word_type: {
+			adj: "Adjectif",
+			adv: "Adverbe",
+			exp: "Expression",
+			n: "Nom",
+			part: "Particule",
+			pre: "Préfixe",
+			suf: "Suffixe",
+			v: "Verbe",
+		},
+		about: {
+			title: "À propos",
+			description: `
+				<p>TangoVocab a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
+				<p>Cette application a été développée par <a href="https://www.interordi.com/" target="_blank">Stéphane Lemay</a>.</p>
+			`,
 		},
 		nav: {
 			about: "À propos",

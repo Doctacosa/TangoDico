@@ -12,8 +12,8 @@ const types = ref([]);
 const lessons = ref([]);
 
 //TODO: Check if plain definition or reactive state is better
-let lessons_min = 0;
-let lessons_max = 99;
+let lessons_min = 999;
+let lessons_max = 0;
 
 const search_type = ref("");
 const search_lesson_min = ref("");
@@ -24,9 +24,15 @@ const keyword = ref("");
 
 
 //Functions
-async function runSearch() {
+async function runSearch(value_changed: string) {
 	//if (keyword.value == "")
 	//	return;
+
+	//Impose sane limits
+	if (value_changed == 'search_lesson_min' && search_lesson_min.value > search_lesson_max.value)
+		search_lesson_max.value = search_lesson_min.value;
+	else if (value_changed == 'search_lesson_max' && search_lesson_min.value > search_lesson_max.value)
+		search_lesson_min.value = search_lesson_max.value;
 
 	const SQL = await initSqlJs({
 		locateFile: file => `https://sql.js.org/dist/${file}`
@@ -39,11 +45,11 @@ async function runSearch() {
 	let sql_where = '';
 	if (keyword.value != "")
 		sql_where += '	AND (meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%")';
-	if (search_type.value != "")
+	if (search_type.value !== "")
 		sql_where += '	AND type = "' + search_type.value + '"';
-	if (search_lesson_min.value != "")
+	if (search_lesson_min.value !== "")
 		sql_where += '	AND lesson >= ' + search_lesson_min.value + '';
-	if (search_lesson_max.value != "")
+	if (search_lesson_max.value !== "")
 		sql_where += '	AND lesson <= ' + search_lesson_max.value + '';
 
 	const sql = `
@@ -90,7 +96,7 @@ onMounted(async () => {
 		const values = result[0].values;
 		types.value.push({key: t("filter.all"), value: ""});
 		for (const x in values) {
-			types.value.push({key: values[x][0], value: values[x][0]});
+			types.value.push({key: t("word_type." + values[x][0]), value: values[x][0]});
 		}
 		/*
 		types.value = values.map(row =>
@@ -111,12 +117,14 @@ onMounted(async () => {
 		lessons.value.push({key: t("filter.all"), value: ""});
 		for (const x in values) {
 			lessons.value.push({key: values[x][0], value: values[x][0]});
+			if (lessons_min > values[x][0])
+				lessons_min = values[x][0];
+			if (lessons_max < values[x][0])
+				lessons_max = values[x][0];
 		}
 	}
 
-	//TODO: min(), max() based on actual data
-	lessons_min = 0;
-	lessons_max = 23;
+	runSearch();
 });
 </script>
 
@@ -124,25 +132,45 @@ onMounted(async () => {
 <template>
 	<div class="dictionary">
 		<div class="search_settings">
-			<IftaLabel>
-				<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" fluid />
-				<label>{{ t("search.word") }}</label>
-			</IftaLabel>
-			
+			<div class="settings">
+				<IftaLabel>
+					<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" fluid />
+					<label>{{ t("search.word") }}</label>
+				</IftaLabel>
+			</div>
+
 			<div class="subsettings">
 				<IftaLabel>
-					<Select v-model="search_type" :options="types" optionLabel="key" optionValue="value" @change="runSearch">
-					</Select>
+					<Select
+						v-model="search_type"
+						:options="types"
+						:placeholder="t('filter.all')"
+						optionLabel="key"
+						optionValue="value"
+						@change="runSearch('search_type')"
+					></Select>
 					<label>{{ t("search.type") }}</label>
 				</IftaLabel>
 				<IftaLabel>
-					<Select v-model="search_lesson_min" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
-					</Select>
+					<Select
+						v-model="search_lesson_min"
+						:options="lessons"
+						:placeholder="t('filter.all')"
+						optionLabel="key"
+						optionValue="value"
+						@change="runSearch('search_lesson_min')"
+					></Select>
 					<label>{{ t("search.lesson_min") }}</label>
 				</IftaLabel>
 				<IftaLabel>
-					<Select v-model="search_lesson_max" :options="lessons" optionLabel="key" optionValue="value" @change="runSearch">
-					</Select>
+					<Select
+						v-model="search_lesson_max"
+						:options="lessons"
+						:placeholder="t('filter.all')"
+						optionLabel="key"
+						optionValue="value"
+						@change="runSearch('search_lesson_max')"
+					></Select>
 					<label>{{ t("search.lesson_max") }}</label>
 				</IftaLabel>
 			</div>
@@ -153,7 +181,7 @@ onMounted(async () => {
 				<td>{{ row.meaning }}</td>
 				<td>{{ row.kanji }}</td>
 				<td>{{ row.kana }}</td>
-				<td>{{ row.type }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
+				<td>{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
 				<td>{{ row.lesson }}</td>
 			</tr>
 		</table>
@@ -179,6 +207,7 @@ onMounted(async () => {
 .subsettings {
 	display: flex;
 	justify-content: space-around;
+	margin-top: 12px;
 }
 
 .words_list {
@@ -191,6 +220,10 @@ onMounted(async () => {
 	td {
 		padding: 8px;
 	}
+}
+
+.p-select {
+	min-width: 110px;
 }
 
 .p-message {
