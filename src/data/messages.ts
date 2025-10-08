@@ -28,7 +28,7 @@ const messages = {
 		about: {
 			title: "About",
 			description: `
-				<p>TangoVocab a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
+				<p>Tango Dico a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
 				<p>Cette application a été développée par <a href="https://www.interordi.com/" target="_blank">Stéphane Lemay</a>.</p>
 			`,
 		},
@@ -66,7 +66,7 @@ const messages = {
 		about: {
 			title: "À propos",
 			description: `
-				<p>TangoVocab a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
+				<p>Tango Dico a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
 				<p>Cette application a été développée par <a href="https://www.interordi.com/" target="_blank">Stéphane Lemay</a>.</p>
 			`,
 		},

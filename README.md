@@ -1,3 +1,3 @@
-# TangoVocab
+# Tango Dico
 
 To be documented.
