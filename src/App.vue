@@ -9,11 +9,9 @@ import { RouterLink, RouterView } from 'vue-router'
 
 
 <template>
-	<header>
-		<img src="@/assets/logo.png" alt="Logo" class="logo" width="125" height="125" />
+	<!--header>
 		<h1>{{ t("nav.dictionary") }}</h1>
-
-	</header>
+	</header-->
 
 	<RouterView />
 
