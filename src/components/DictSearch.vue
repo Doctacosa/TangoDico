@@ -131,6 +131,8 @@ onMounted(async () => {
 
 <template>
 	<div class="dictionary">
+		<h2>{{ t("nav.dictionary") }}</h2>
+
 		<div class="search_settings">
 			<div class="settings">
 				<IftaLabel>
@@ -193,6 +195,9 @@ onMounted(async () => {
 
 
 <style scoped>
+h2 {
+	text-align: center;
+}
 
 .dictionary {
 	text-align: left;

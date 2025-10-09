@@ -14,6 +14,7 @@ import messages from './data/messages.ts'
 
 import IftaLabel from 'primevue/iftalabel';
 import InputText from 'primevue/inputtext';
+import Menubar from 'primevue/menubar';
 import Message from 'primevue/message';
 import Select from 'primevue/select';
 
@@ -91,6 +92,7 @@ app.use(PrimeVue, {
 
 app.component('IftaLabel', IftaLabel);
 app.component('InputText', InputText);
+app.component('Menubar', Menubar);
 app.component('Message', Message);
 app.component('Select', Select);
 

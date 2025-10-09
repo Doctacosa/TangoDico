@@ -1,10 +1,30 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import router from './router'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
 
 import { RouterLink, RouterView } from 'vue-router'
 //import HelloWorld from './components/HelloWorld.vue'
+
+const navItems = ref([
+	{
+		label: t("nav.home"),
+		//icon: 'pi pi-link',
+		command: () => {
+			router.push('/');
+		}
+	},
+	{
+		label: t("nav.about"),
+		//icon: 'pi pi-link',
+		command: () => {
+			router.push('/about');
+		}
+	},
+]);
+
 </script>
 
 
@@ -13,16 +33,18 @@ import { RouterLink, RouterView } from 'vue-router'
 		<h1>{{ t("nav.dictionary") }}</h1>
 	</header-->
 
+	<Menubar :model="navItems">
+		<template #item="{ item, props }">
+			<a :href="item.url" :target="item.target" v-bind="props.action">
+				<!--span :class="item.icon" /-->
+				<span>{{ item.label }}</span>
+			</a>
+		</template>
+	</Menubar>
+
 	<RouterView />
 
-	<footer>
-		<div class="wrapper">
-			<nav>
-				<RouterLink to="/">{{ t("nav.home") }}</RouterLink>
-				<RouterLink to="/about">{{ t("nav.about") }}</RouterLink>
-			</nav>
-		</div>
-	</footer>
+	<!--RouterLink to="/">{{ t("nav.home") }}</RouterLink-->
 </template>
 
 
@@ -37,14 +59,7 @@ footer {
 	margin: 0 auto 2rem;
 }
 
-nav {
-	width: 100%;
-	font-size: 12px;
-	text-align: center;
-	margin-top: 2rem;
-
-	> * {
-		padding: 8px;
-	}
+.p-menubar {
+	margin-bottom: 25px;
 }
 </style>
