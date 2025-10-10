@@ -179,20 +179,24 @@ onMounted(async () => {
 		</div>
 
 		<table v-if="matches.length" class="words_list">
-			<tr>
-				<th>{{ t("search.word") }}</th>
-				<th>{{ t("search.kana") }}</th>
-				<th>{{ t("search.kanji") }}</th>
-				<th>{{ t("search.type") }}</th>
-				<th>{{ t("search.lesson") }}</th>
-			</tr>
-			<tr v-for="row in matches" :key="row.id">
-				<td>{{ row.meaning }}</td>
-				<td>{{ row.kana }}</td>
-				<td>{{ row.kanji }}</td>
-				<td>{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
-				<td>{{ row.lesson }}</td>
-			</tr>
+			<thead>
+				<tr>
+					<th>{{ t("search.word") }}</th>
+					<th>{{ t("search.kana") }}</th>
+					<th>{{ t("search.kanji") }}</th>
+					<th>{{ t("search.type") }}</th>
+					<th>{{ t("search.lesson") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="row in matches" :key="row.id">
+					<td>{{ row.meaning }}</td>
+					<td>{{ row.kana }}</td>
+					<td>{{ row.kanji }}</td>
+					<td>{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
+					<td>{{ row.lesson }}</td>
+				</tr>
+			</tbody>
 		</table>
 
 		<Message v-if="!matches.length">{{ t("search.no_results") }}</Message>
