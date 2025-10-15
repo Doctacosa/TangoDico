@@ -61,5 +61,14 @@ footer {
 
 .p-menubar {
 	margin-bottom: 25px;
+
+	a:hover {
+		color: unset;
+		text-decoration: unset;
+	}
+
+	a {
+		color: unset;
+	}
 }
 </style>
