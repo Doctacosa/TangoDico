@@ -178,26 +178,23 @@ onMounted(async () => {
 			</div>
 		</div>
 
-		<table v-if="matches.length" class="words_list">
-			<thead>
-				<tr>
-					<th>{{ t("search.word") }}</th>
-					<th>{{ t("search.kana") }}</th>
-					<th>{{ t("search.kanji") }}</th>
-					<th>{{ t("search.type") }}</th>
-					<th>{{ t("search.lesson") }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="row in matches" :key="row.id">
-					<td>{{ row.meaning }}</td>
-					<td>{{ row.kana }}</td>
-					<td>{{ row.kanji }}</td>
-					<td>{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></td>
-					<td>{{ row.lesson }}</td>
-				</tr>
-			</tbody>
-		</table>
+		<div v-if="matches.length" class="words_list">
+			<div class="meaning"><b>{{ t("search.word") }}</b></div>
+			<div class="kana"><b>{{ t("search.kana") }}</b></div>
+			<div class="kanji1"><b>{{ t("search.kanji") }}</b></div>
+			<div class="type"><b>{{ t("search.type") }}</b></div>
+			<div class="lesson"><b>{{ t("search.lesson") }}</b></div>
+			<div class="kanji2"><b>{{ t("search.kanji") }}</b></div>
+
+			<template v-for="row in matches" :key="row.id">
+				<div class="meaning">{{ row.meaning }}</div>
+				<div class="kana">{{ row.kana }}</div>
+				<div class="kanji1">{{ row.kanji }}</div>
+				<div class="type">{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></div>
+				<div class="lesson">{{ row.lesson }}</div>
+				<div class="kanji2">{{ row.kanji }}</div>
+			</template>
+		</div>
 
 		<Message v-if="!matches.length">{{ t("search.no_results") }}</Message>
 
@@ -229,15 +226,63 @@ h2 {
 
 .words_list {
 	margin: 20px auto 20px auto;
-}
+	display: grid;
+	grid-template-columns: auto auto auto auto auto;
+	gap: 8px;
 
-.words_list {
 	/*line-height: 1.6;*/
 
-	th, td {
-		padding: 8px;
+	> div {
+		align-items: start;
+	}
+
+	.kanji2 {
+		display: none;
+	}
+
+	.meaning {
+		margin-bottom: 12px;
 	}
 }
+
+
+@media all and (max-width: 600px) {
+	.words_list {
+		grid-template-columns: repeat(4, auto);
+		grid-auto-rows: auto;
+
+		.meaning {
+			grid-column: 1;
+			grid-row: span 2;
+			margin-bottom: 12px;
+		}
+
+		.kanji2 {
+			grid-column: 2;
+			display: block;
+			margin-bottom: 12px;
+		}
+
+		.kana {
+			grid-column: 2;
+		}
+
+		.type {
+			grid-column: 3;
+			grid-row: span 2;
+		}
+		
+		.lesson {
+			grid-column: 4;
+			grid-row: span 2;
+		}
+
+		.kanji1 {
+			display: none;
+		}
+	}
+}
+
 
 .p-select {
 	min-width: 110px;
