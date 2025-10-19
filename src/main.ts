@@ -38,6 +38,7 @@ const i18n = createI18n({
 	locale: 'fr',	//Main locale
 	fallbackLocale: 'en',	//Fallback
 	messages,	//Set locale messages
+	warnHtmlMessage: false,
 })
 
 
