@@ -145,10 +145,23 @@ onMounted(async () => {
 
 		<div class="search_settings">
 			<div class="settings">
-				<IftaLabel>
-					<InputText name="keyword" :placeholder="t('search.placeholder')" v-model="keyword" @change="runSearch" size="large" fluid />
-					<label>{{ t("search.word") }}</label>
-				</IftaLabel>
+				<InputGroup>
+					<IftaLabel>
+						<InputText
+							name="keyword"
+							type="search"
+							:placeholder="t('search.placeholder')"
+							v-model="keyword"
+							@change="runSearch"
+							size="large"
+							fluid
+						/>
+						<label>{{ t("search.word") }}</label>
+					</IftaLabel>
+					<InputGroupAddon>
+						<Button label="🔍" @click="runSearch" severity="success" variant="text" />
+					</InputGroupAddon>
+				</InputGroup>
 			</div>
 
 			<div class="subsettings">

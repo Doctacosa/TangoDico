@@ -12,7 +12,10 @@ import Aura from '@primeuix/themes/aura';
 
 import messages from './data/messages.ts'
 
+import Button from 'primevue/button';
 import IftaLabel from 'primevue/iftalabel';
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputText from 'primevue/inputtext';
 import Menubar from 'primevue/menubar';
 import Message from 'primevue/message';
@@ -91,7 +94,10 @@ app.use(PrimeVue, {
 	}
 });
 
+app.component('Button', Button);
 app.component('IftaLabel', IftaLabel);
+app.component('InputGroup', InputGroup);
+app.component('InputGroupAddon', InputGroupAddon);
 app.component('InputText', InputText);
 app.component('Menubar', Menubar);
 app.component('Message', Message);
