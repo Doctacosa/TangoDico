@@ -15,7 +15,7 @@ const { t } = useI18n({ useScope: 'global' })
 	<div class="about">
 		<h2>{{ t("about.title") }}</h2>
 
-		<div v-html="t('about.description')"></div>
+		<div v-html="t('about.description', { email: 'tango@interordi.com' })"></div>
 	</div>
 </template>
 
