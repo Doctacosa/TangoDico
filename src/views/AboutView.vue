@@ -23,9 +23,15 @@ const { t } = useI18n({ useScope: 'global' })
 <style>
 .about {
 	text-align: left;
+
+	hr {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
 }
 
 .logo {
+	width: 100%;
 	max-width: 400px;
 }
 </style>
