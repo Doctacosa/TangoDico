@@ -17,6 +17,8 @@ const messages = {
 			lesson: "Lesson",
 			lesson_min: "Lesson min",
 			lesson_max: "Lesson max",
+			nb_results: "results",
+			too_many_results: "The search returned too many results, only a partial list is shown.",
 		},
 		word_type: {
 			adj: "Adjective",
@@ -61,6 +63,8 @@ const messages = {
 			lesson: "Leçon",
 			lesson_min: "Leçon min",
 			lesson_max: "Leçon max",
+			nb_results: "résultats",
+			too_many_results: "La recherche a retourné trop de résultats, seule une liste partielle est affichée.",
 		},
 		word_type: {
 			adj: "Adjectif",

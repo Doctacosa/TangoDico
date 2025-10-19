@@ -10,10 +10,12 @@ const { t } = useI18n({ useScope: 'global' })
 const matches = ref([]);
 const types = ref([]);
 const lessons = ref([]);
+const nb_results = ref(0);
 
 //TODO: Check if plain definition or reactive state is better
 let lessons_min = 999;
 let lessons_max = 0;
+const results_max = 100;
 
 const search_type = ref("");
 const search_lesson_min = ref("");
@@ -52,17 +54,25 @@ async function runSearch(value_changed: string) {
 	if (search_lesson_max.value !== "")
 		sql_where += '	AND lesson <= ' + search_lesson_max.value + '';
 
-	const sql = `
-		SELECT *
+	//Get the amount of matches
+	let sql = `
+		SELECT COUNT(*)
 		FROM words
 		INNER JOIN words__fr AS words_lang
 		ON words.id = words_lang.id
 		WHERE 1=1
 		` + sql_where + `
-		ORDER BY meaning COLLATE NOCASE ASC, kana COLLATE NOCASE ASC
-		LIMIT 100
 	`;
-	const result = db.exec(sql);
+	let result = db.exec(sql);
+	nb_results.value = result[0].values[0][0];
+
+	//Get the list of matches
+	sql = sql.replace("COUNT(*)", "*");
+	sql += `
+		ORDER BY meaning COLLATE NOCASE ASC, kana COLLATE NOCASE ASC
+		LIMIT ` + results_max + `
+	`;
+	result = db.exec(sql);
 
 	if (result.length > 0) {
 		const columns = result[0].columns;
@@ -176,6 +186,9 @@ onMounted(async () => {
 					<label>{{ t("search.lesson_max") }}</label>
 				</IftaLabel>
 			</div>
+			<div class="results_summary">
+				{{ nb_results }} {{ t("search.nb_results") }}
+			</div>
 		</div>
 
 		<div v-if="matches.length" class="words_list">
@@ -196,7 +209,9 @@ onMounted(async () => {
 			</template>
 		</div>
 
-		<Message v-if="!matches.length">{{ t("search.no_results") }}</Message>
+		<Message v-if="nb_results > results_max" class="secondary">{{ t("search.too_many_results") }}</Message>
+
+		<Message v-if="!matches.length" severity="info">{{ t("search.no_results") }}</Message>
 
 	</div>
 </template>
@@ -222,6 +237,13 @@ h2 {
 	justify-content: space-around;
 	flex-wrap: wrap;
 	margin-top: 12px;
+}
+
+.results_summary { 
+	text-align: center;
+	margin-top: 20px;
+	font-weight: bold;
+	font-size: 110%;
 }
 
 .words_list {
@@ -290,5 +312,6 @@ h2 {
 
 .p-message {
 	margin-top: 30px;
+	margin-bottom: 30px;
 }
 </style>
