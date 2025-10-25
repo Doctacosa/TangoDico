@@ -3,21 +3,22 @@ import { ref } from 'vue';
 import router from './router'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n({ useScope: 'global' })
+const { t, availableLocales } = useI18n({ useScope: 'global' })
 
 import { RouterLink, RouterView } from 'vue-router'
 //import HelloWorld from './components/HelloWorld.vue'
 
+//Build navigation options
 const navItems = ref([
 	{
-		label: t("nav.home"),
+		label: "nav.home",
 		//icon: 'pi pi-link',
 		command: () => {
 			router.push('/');
 		}
 	},
 	{
-		label: t("nav.about"),
+		label: "nav.about",
 		//icon: 'pi pi-link',
 		command: () => {
 			router.push('/about');
@@ -25,6 +26,15 @@ const navItems = ref([
 	},
 ]);
 
+//Get available locales
+const locales = [];
+for (const x in availableLocales) {
+	const locale = availableLocales[x];
+	locales.push({
+		label: locale.toUpperCase(),
+		value: locale,
+	});
+}
 </script>
 
 
@@ -37,8 +47,17 @@ const navItems = ref([
 		<template #item="{ item, props }">
 			<a :href="item.url" :target="item.target" v-bind="props.action">
 				<!--span :class="item.icon" /-->
-				<span>{{ item.label }}</span>
+				<span>{{ t(item.label) }}</span>
 			</a>
+		</template>
+		<template #end>
+			<img src="@/assets/language.svg" alt="Language" />
+			<Select
+				v-model="$i18n.locale"
+				:options="locales"
+				optionLabel="label"
+				optionValue="value"
+			></Select>
 		</template>
 	</Menubar>
 
@@ -61,6 +80,12 @@ footer {
 
 .p-menubar {
 	margin-bottom: 25px;
+
+	img {
+		max-height: 24px;
+		vertical-align: middle;
+		margin-right: 6px;
+	}
 
 	a:hover {
 		color: unset;
