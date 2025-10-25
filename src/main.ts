@@ -38,11 +38,22 @@ const clTheme = definePreset(Aura, {
 const i18n = createI18n({
 	legacy: false, // you must set `false`, to use Composition API
 	globalInjection: true,
-	locale: 'fr',	//Main locale
+	locale: 'en',	//Main locale
 	fallbackLocale: 'en',	//Fallback
 	messages,	//Set locale messages
 	warnHtmlMessage: false,
 })
+
+//Use user's locale if available
+if (typeof window.navigator != "undefined" &&
+	typeof window.navigator.language != "undefined") {
+	const userLocale = window.navigator.language.split("-")[0];
+
+	if (i18n.global.availableLocales.includes(userLocale)) {
+		i18n.global.locale.value = userLocale;
+	}
+}
+
 
 
 const app = createApp(App)
