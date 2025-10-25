@@ -1,11 +1,11 @@
 <script setup lang="ts">
 //import HelloWorld from './components/HelloWorld.vue'
 
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import initSqlJs from 'sql.js';
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n({ useScope: 'global' })
 
 const matches = ref([]);
 const types = ref([]);
@@ -58,7 +58,7 @@ async function runSearch(value_changed: string) {
 	let sql = `
 		SELECT COUNT(*)
 		FROM words
-		INNER JOIN words__fr AS words_lang
+		INNER JOIN words__` + locale.value + ` AS words_lang
 		ON words.id = words_lang.id
 		WHERE 1=1
 		` + sql_where + `
@@ -84,6 +84,12 @@ async function runSearch(value_changed: string) {
 		matches.value = [];
 	}
 }
+
+
+//Monitor locale change to refresh results
+watch(locale, () => {
+	runSearch("");
+});
 
 
 onMounted(async () => {
