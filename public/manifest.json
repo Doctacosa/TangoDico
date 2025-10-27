@@ -1,0 +1,46 @@
+{
+  "name": "Tango Dico",
+  "short_name": "Tango Dico",
+  "start_url": "https://tango.interordi.com/",
+  "display": "standalone",
+  "description": "A Japanese dictionary with filters for quick browsing.",
+  "lang": "EN",
+  "dir": "auto",
+  "theme_color": "#6a462e",
+  "background_color": "#000000",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "public/images/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/images/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "public/images/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/images/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
+      "sizes": "2880x1800",
+      "type": "image/png",
+      "description": "A screenshot of the home page"
+    }
+  ]
+}
