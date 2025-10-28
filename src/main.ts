@@ -7,7 +7,7 @@ import router from './router'
 import VueMatomo from 'vue-matomo'
 import App from './App.vue'
 
-//import { definePreset, palette } from '@primevue/themes';
+import { definePreset, palette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 
 import messages from './data/messages.ts'
@@ -23,15 +23,13 @@ import Select from 'primevue/select';
 
 
 // custom color
-/*
-const primaryColor = palette('#5EDA00');
+const primaryColor = palette('#bf8e6d');
 
 const clTheme = definePreset(Aura, {
 	semantic: {
 		primary: primaryColor
 	}
 });
-*/
 
 
 // Create VueI18n instance with options
@@ -97,8 +95,7 @@ app.use(VueMatomo, {
 
 app.use(PrimeVue, {
 	theme: {
-		preset: Aura,
-		//preset: clTheme,
+		preset: clTheme,
 		options: {
 			darkModeSelector: '.dark-mode',
 		}

@@ -165,7 +165,7 @@ onMounted(async () => {
 						<label>{{ t("search.word") }}</label>
 					</IftaLabel>
 					<InputGroupAddon>
-						<Button label="🔍" @click="runSearch" severity="success" variant="text" />
+						<Button label="🔍" @click="runSearch" severity="primary" variant="text" />
 					</InputGroupAddon>
 				</InputGroup>
 			</div>

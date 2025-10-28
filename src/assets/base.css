@@ -1,1 +1,4 @@
 a:link { color: #bf8e6d; }
+a:visited { color: #bf8e6d; }
+a:active { color: #ffbd91; }
+a:hover { color: #ffbd91; }
