@@ -5,11 +5,19 @@ import { useI18n } from 'vue-i18n'
 
 const { t, availableLocales } = useI18n({ useScope: 'global' })
 
-import { RouterLink, RouterView } from 'vue-router'
+import { /* RouterLink,*/ RouterView } from 'vue-router'
 //import HelloWorld from './components/HelloWorld.vue'
 
 //Build navigation options
-const navItems = ref([
+type NavItemType = {
+	label: string;
+	//icon?: string;
+	url?: string;
+	target?: string;
+	command: () => void;
+};
+
+const navItems = ref< NavItemType[] >([
 	{
 		label: "nav.home",
 		//icon: 'pi pi-link',
@@ -47,7 +55,7 @@ for (const x in availableLocales) {
 		<template #item="{ item, props }">
 			<a :href="item.url" :target="item.target" v-bind="props.action">
 				<!--span :class="item.icon" /-->
-				<span>{{ t(item.label) }}</span>
+				<span>{{ t(String(item.label)) }}</span>
 			</a>
 		</template>
 		<template #end>

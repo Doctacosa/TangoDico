@@ -7,9 +7,31 @@ import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 
-const matches = ref([]);
-const types = ref([]);
-const lessons = ref([]);
+type MatchType = {
+	id: number,
+	kana: string,
+	kanji: string,
+	lesson: string,
+	lesson_full: string,
+	meaning: string,
+	subtype: string,
+	type: string,
+	type_full: string,
+}
+
+type FilterType = {
+	key: string;
+	value: string;
+}
+
+type LessonType = {
+	key: string,
+	value: string,
+}
+
+const matches = ref< MatchType[] >([]);
+const types = ref< FilterType[] >([]);
+const lessons = ref< LessonType[] >([]);
 const nb_results = ref(0);
 
 //TODO: Check if plain definition or reactive state is better
@@ -26,7 +48,7 @@ const keyword = ref("");
 
 
 //Functions
-async function runSearch(value_changed: string) {
+async function runSearch(value_changed?: string) {
 	//if (keyword.value == "")
 	//	return;
 
@@ -64,7 +86,7 @@ async function runSearch(value_changed: string) {
 		` + sql_where + `
 	`;
 	let result = db.exec(sql);
-	nb_results.value = result[0].values[0][0];
+	nb_results.value = Number(result[0].values[0][0]);
 
 	//Get the list of matches
 	sql = sql.replace("COUNT(*)", "*");
@@ -77,6 +99,7 @@ async function runSearch(value_changed: string) {
 	if (result.length > 0) {
 		const columns = result[0].columns;
 		const values = result[0].values;
+		//@ts-expect-error SqlValue[] assigned to MatchType
 		matches.value = values.map(row =>
 			Object.fromEntries(row.map((val, i) => [columns[i], val]))
 		);
@@ -88,7 +111,7 @@ async function runSearch(value_changed: string) {
 
 //Monitor locale change to refresh results
 watch(locale, () => {
-	runSearch("");
+	runSearch();
 });
 
 
@@ -112,7 +135,7 @@ onMounted(async () => {
 		const values = result[0].values;
 		types.value.push({key: t("filter.all"), value: ""});
 		for (const x in values) {
-			types.value.push({key: t("word_type." + values[x][0]), value: values[x][0]});
+			types.value.push({key: t("word_type." + values[x][0]), value: String(values[x][0])});
 		}
 		/*
 		types.value = values.map(row =>
@@ -132,11 +155,12 @@ onMounted(async () => {
 		const values = result[0].values;
 		lessons.value.push({key: t("filter.all"), value: ""});
 		for (const x in values) {
-			lessons.value.push({key: values[x][0], value: values[x][0]});
-			if (lessons_min > values[x][0])
-				lessons_min = values[x][0];
-			if (lessons_max < values[x][0])
-				lessons_max = values[x][0];
+			const lesson: string = String(values[x][0]);
+			lessons.value.push({key: lesson, value: lesson});
+			if (lessons_min > Number(lesson))
+				lessons_min = Number(lesson);
+			if (lessons_max < Number(lesson))
+				lessons_max = Number(lesson);
 		}
 	}
 
@@ -158,14 +182,14 @@ onMounted(async () => {
 							type="search"
 							:placeholder="t('search.placeholder')"
 							v-model="keyword"
-							@change="runSearch"
+							@change="runSearch()"
 							size="large"
 							fluid
 						/>
 						<label>{{ t("search.word") }}</label>
 					</IftaLabel>
 					<InputGroupAddon>
-						<Button label="🔍" @click="runSearch" severity="primary" variant="text" />
+						<Button label="🔍" @click="runSearch()" severity="primary" variant="text" />
 					</InputGroupAddon>
 				</InputGroup>
 			</div>

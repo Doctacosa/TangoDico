@@ -6,6 +6,7 @@ import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import PrimeVue from 'primevue/config';
 import router from './router'
+//@ts-expect-error Types not available
 import VueMatomo from 'vue-matomo'
 import App from './App.vue'
 
@@ -34,6 +35,9 @@ const clTheme = definePreset(Aura, {
 });
 
 
+//Set assigned languages for matching
+type languageType = "fr" | "en";
+
 // Create VueI18n instance with options
 const i18n = createI18n({
 	legacy: false, // you must set `false`, to use Composition API
@@ -49,8 +53,8 @@ if (typeof window.navigator != "undefined" &&
 	typeof window.navigator.language != "undefined") {
 	const userLocale = window.navigator.language.split("-")[0];
 
-	if (i18n.global.availableLocales.includes(userLocale)) {
-		i18n.global.locale.value = userLocale;
+	if (i18n.global.availableLocales.includes(userLocale as languageType)) {
+		i18n.global.locale.value = userLocale as languageType;
 	}
 }
 
