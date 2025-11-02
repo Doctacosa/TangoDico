@@ -8,14 +8,16 @@ const { t } = useI18n({ useScope: 'global' })
 
 
 <template>
-	<header>
-		<img src="@/assets/logo.png" alt="Logo" class="logo" />
-	</header>
+	<div>
+		<header>
+			<img src="@/assets/logo.png" alt="Logo" class="logo" />
+		</header>
 
-	<div class="about">
-		<h2>{{ t("about.title") }}</h2>
+		<div class="about">
+			<h2>{{ t("about.title") }}</h2>
 
-		<div v-html="t('about.description', { email: 'tango@interordi.com' })"></div>
+			<div v-html="t('about.description', { email: 'tango@interordi.com' })"></div>
+		</div>
 	</div>
 </template>
 

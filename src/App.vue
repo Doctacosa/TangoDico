@@ -61,7 +61,13 @@ for (const x in availableLocales) {
 		</template>
 	</Menubar>
 
-	<RouterView />
+	<RouterView 
+		v-slot="{ Component }"
+	>
+		<Transition name="fade" mode="out-in">
+			<Component :is="Component" />
+		</Transition>
+	</RouterView>
 
 	<!--RouterLink to="/">{{ t("nav.home") }}</RouterLink-->
 </template>
@@ -95,5 +101,12 @@ footer {
 	a {
 		color: unset;
 	}
+}
+
+.fade-enter-active, .fade-leave-active {
+	transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to {
+	opacity: 0;
 }
 </style>
