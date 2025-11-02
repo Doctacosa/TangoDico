@@ -17,6 +17,8 @@ const { t } = useI18n({ useScope: 'global' })
 			<h2>{{ t("about.title") }}</h2>
 
 			<div v-html="t('about.description', { email: 'tango@interordi.com' })"></div>
+
+			<div v-html="t('about.warnings')" class="warnings"></div>
 		</div>
 	</div>
 </template>
@@ -35,5 +37,19 @@ const { t } = useI18n({ useScope: 'global' })
 .logo {
 	width: 100%;
 	max-width: 400px;
+}
+
+.warnings {
+	border-left: 3px solid #FF5555;
+	margin-top: 20px;
+	padding-left: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+
+	h3 {
+		color: #FF5555;
+		font-size: 90%;
+		margin-top: 12px;
+	}
 }
 </style>

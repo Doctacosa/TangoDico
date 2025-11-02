@@ -33,10 +33,12 @@ const messages = {
 		about: {
 			title: "About",
 			description: `
-				<p>Tango Dico has been developed to allow quick searches to be done through the vocabulary learned by students of the Japanese language.</p>
+				<p>Tango Dico allows students of the Japanese language to do quick searches through the vocabulary, by kana, kanji or native tongue. Different filters are also available. This tool is especially suited for beginner or intermediary students.</p>
 				<p>This application was developed by <a href="https://www.interordi.com/" target="_blank">Stéphane Lemay</a>.</p>
 				<p>I'm learning Japanese myself, so all suggestions, comments and corrections are more than welcome! You can write at <a href="mailto:{ email }">{ email }</a>.</p>
-				<hr />
+			`,
+			warnings: `
+				<h3>Notice</h3>
 				<p>The lessons numbering is based on the Genki manuals by The Japan Times Publishing, who do not endorse this application.</p>
 			`,
 		},
@@ -79,12 +81,14 @@ const messages = {
 		about: {
 			title: "À propos",
 			description: `
-				<p>Tango Dico a été developpée pour permettre la recherche rapide à travers le vocabulaire appris par des étudiants de la langue japonaise.</p>
+				<p>Tango Dico permet aux étudiants de la langue japonaise de faire des recherches rapides à travers le vocabulaire, par kana, kanji ou langue native. Différents filtres sont aussi disponibles. Cet outil est particulièrement adapté pour les étudiants débutants et intermédiaires.</p>
 				<p>Cette application a été développée par <a href="https://www.interordi.com/" target="_blank">Stéphane Lemay</a>.</p>
 				<p>J'apprends moi-même le japonais, alors toutes les suggestions, commentaires et corrections sont les bienvenus! Vous pouvez écrire à <a href="mailto:{ email }">{ email }</a>.</p>
-				<hr />
-				<p>La numérotation des leçons est tirée du manuel Genki par The Japan Times Publishing, qui n'endossent pas cette application.</p>
 			`,
+			warnings: `
+				<h3>Notice</h3>
+				<p>La numérotation des leçons est tirée du manuel Genki par The Japan Times Publishing, qui n'endossent pas cette application.</p>
+			`
 		},
 		nav: {
 			about: "À propos",
