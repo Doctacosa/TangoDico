@@ -1,0 +1,24 @@
+
+
+@mixin safe-area() {
+	/* Stay within save limits (avoids camera black hole) */
+	padding-top: max(0px, env(safe-area-inset-top));
+	padding-bottom: max(0px, env(safe-area-inset-bottom));
+	padding-left: max(0px, env(safe-area-inset-left));
+	padding-right: max(0px, env(safe-area-inset-right));
+}
+
+
+* {
+	box-sizing: border-box;
+}
+
+
+@supports(padding: max(0px)) {
+	#app {
+		position: relative;
+		@include safe-area;
+	}
+}
+
+
