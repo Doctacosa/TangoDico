@@ -62,13 +62,17 @@ async function runSearch(value_changed?: string) {
 		locateFile: file => `https://sql.js.org/dist/${file}`
 	});
 
-	const response = await fetch('/jpdict.db');	//Chemin relatif depuis public/
+	const response = await fetch('/jpdict.db');	//Path relative to public/
 	const buffer = await response.arrayBuffer();
 	const db = new SQL.Database(new Uint8Array(buffer));
 
+
+	//Strip accents from the search string
+	const keyword_clean = keyword.value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+
 	let sql_where = '';
-	if (keyword.value != "")
-		sql_where += '	AND (meaning LIKE "%' + keyword.value + '%" OR kana LIKE "%' + keyword.value + '%" OR kanji LIKE "%' + keyword.value + '%")';
+	if (keyword_clean != "")
+		sql_where += '	AND (matching LIKE "%' + keyword_clean + '%" OR kana LIKE "%' + keyword_clean + '%" OR kanji LIKE "%' + keyword_clean + '%")';
 	if (search_type.value !== "")
 		sql_where += '	AND type = "' + search_type.value + '"';
 	if (search_lesson_min.value !== "")
