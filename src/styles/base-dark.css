@@ -1,0 +1,477 @@
+a:link {
+  text-decoration: none;
+  color: #00AA00;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #00AA00;
+}
+
+a:active {
+  text-decoration: none;
+  color: #EEEE00;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #00AA00;
+}
+
+#footer a {
+  color: #666666;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 11pt;
+  background-color: #000000;
+  color: #BBBBBB;
+  margin: 0.6rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1.25rem 0rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #DDDDDD;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.9rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #AAA;
+}
+
+input, textarea, select, button {
+  border: 1px solid #777;
+  background-color: #222222;
+  color: #EEEEEE;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  transition: all 0.1s ease-in-out;
+  font-family: Arial, Sans-Serif;
+  font-size: 10pt;
+}
+
+input:focus, textarea:focus, select:focus, button:focus {
+  box-shadow: 0 0 5px #99CCEE;
+  border: 1px solid #99CCEE;
+}
+
+input:disabled, textarea:disabled, select:disabled, button:disabled {
+  border: 1px solid #777;
+  background-color: #444;
+  color: #999;
+}
+
+input[type=color] {
+  padding: 0 1px;
+}
+
+button, [type=button], [type=reset], [type=submit] {
+  background-color: #444;
+  border: 1px solid #999999;
+  color: #EEE;
+  padding: 0.25rem 0.3rem;
+}
+
+button:disabled, [type=button]:disabled, [type=reset]:disabled, [type=submit]:disabled {
+  background-color: #222;
+  border: 1px solid #666666;
+  color: #999;
+}
+
+[type=radio], [type=checkbox] {
+  width: 1.3em;
+  height: 1.3em;
+  vertical-align: middle;
+}
+
+/*
+progress, meter {
+	height: 1rem;
+}
+*/
+fieldset {
+  border: 2px solid #777;
+  border-radius: 0.5rem;
+}
+
+legend {
+  margin: 0 0.3rem;
+}
+
+input[type=checkbox], input[type=radio] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: #222222;
+  /*border-radius: 0;*/
+  position: relative;
+  top: -0.1rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type=checkbox]:after, input[type=radio]:after {
+  position: absolute;
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  left: -1px;
+  top: -1px;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type=checkbox]:checked, input[type=radio]:checked {
+  border-color: #0088FF;
+}
+
+input[type=checkbox]:checked:after {
+  border-radius: 0.25rem;
+  background: #0088FF;
+  background-image: url("https://www.interordi.com/files/css/checkmark.svg");
+  background-position: 0 0;
+  background-size: 100% 100%;
+}
+
+input[type=checkbox]:disabled, input[type=radio]:disabled {
+  cursor: default;
+  background: #444;
+}
+
+input[type=checkbox]:checked:disabled, input[type=radio]:checked:disabled {
+  border-color: #557788;
+  /*background: $input-disabled-marker-active-color;*/
+}
+
+input[type=checkbox]:checked:disabled:after {
+  border-radius: 0.25rem;
+  background: #557788;
+  background-image: url("https://www.interordi.com/files/css/checkmark.svg");
+  background-position: 0 0;
+  background-size: 100% 100%;
+}
+
+input[type=checkbox].toggle {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 3.5rem;
+  height: 1.5rem;
+  background: #222222;
+  border-radius: 3rem;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type=checkbox].toggle:checked {
+  background: #0088FF;
+}
+
+input[type=checkbox].toggle:after {
+  position: absolute;
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #DDD;
+  box-shadow: 0 0 0.25rem rgba(255, 255, 255, 0.3);
+  transform: scale(0.7);
+  left: 0;
+  top: -1px;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type=checkbox].toggle:checked:after {
+  left: calc(100% - 1.5rem);
+  background: #FFF;
+}
+
+input[type=checkbox].toggle:disabled {
+  cursor: default;
+  background-color: #444;
+}
+
+input[type=checkbox].toggle:disabled:after {
+  background: #999999;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3);
+}
+
+input[type=checkbox].toggle:checked:disabled {
+  background: #557788;
+}
+
+input[type=checkbox].toggle:checked:disabled:after {
+  background: #CCC;
+  border-radius: 3rem;
+}
+
+input[type=checkbox].toggle_light:after {
+  background-image: url("https://www.interordi.com/files/css/light.svg");
+  background-position: 0 0;
+  background-size: 100% 100%;
+}
+
+input[type=checkbox].toggle_light:checked:after {
+  background-image: url("https://www.interordi.com/files/css/dark.svg");
+  background-position: 0 0;
+  background-size: 100% 100%;
+}
+
+input[type=radio] {
+  border-radius: 50%;
+}
+
+input[type=radio]:after {
+  border-radius: 50%;
+  transform: scale(0.67);
+}
+
+input[type=radio]:checked:after {
+  background: #0088FF;
+}
+
+input[type=radio]:checked:disabled:after {
+  background: #557788;
+}
+
+.alert-primary {
+  border: 1px solid rgb(34, 102, 204);
+}
+
+.alert-success {
+  border: 1px solid rgb(34, 136, 34);
+}
+
+.alert-error {
+  border: 1px solid rgb(204, 34, 34);
+}
+
+.alert-warning {
+  border: 1px solid rgb(204, 136, 51);
+}
+
+.alert-info {
+  border: 1px solid rgb(150, 150, 150);
+}
+
+button.alert-primary, input[type=button].alert-primary, input[type=submit].alert-primary {
+  background-color: rgb(34, 102, 204);
+  color: rgb(255, 255, 255);
+}
+
+button.alert-success, input[type=button].alert-success, input[type=submit].alert-success {
+  background-color: rgb(34, 136, 34);
+  color: rgb(255, 255, 255);
+}
+
+button.alert-error, input[type=button].alert-error, input[type=submit].alert-error {
+  background-color: rgb(204, 34, 34);
+  color: rgb(255, 255, 255);
+}
+
+button.alert-warning, input[type=button].alert-warning, input[type=submit].alert-warning {
+  background-color: rgb(204, 136, 51);
+  color: rgb(255, 255, 255);
+}
+
+button.alert-info, input[type=button].alert-info, input[type=submit].alert-info {
+  background-color: rgb(150, 150, 150);
+  color: rgb(255, 255, 255);
+}
+
+div.alert-primary, tr.alert-primary, td.alert-primary {
+  color: #8ab1ec;
+  background-color: #0e2952;
+}
+
+div.alert-success, tr.alert-success, td.alert-success {
+  color: #77dd77;
+  background-color: #0e360e;
+}
+
+div.alert-error, tr.alert-error, td.alert-error {
+  color: #ec8a8a;
+  background-color: #520e0e;
+}
+
+div.alert-warning, tr.alert-warning, td.alert-warning {
+  color: #e6c499;
+  background-color: #523614;
+}
+
+div.alert-info, tr.alert-info, td.alert-info {
+  color: #cbcbcb;
+  background-color: #3c3c3c;
+}
+
+div.alert-primary, div.alert-success, div.alert-error, div.alert-warning, div.alert-info {
+  width: 100%;
+  border-radius: 0.25rem;
+  padding: 0.625rem;
+}
+
+input.alert-primary {
+  background-color: #030a14;
+}
+
+input.alert-success {
+  background-color: #030e03;
+}
+
+input.alert-error {
+  background-color: #140303;
+}
+
+input.alert-warning {
+  background-color: #140e05;
+}
+
+input.alert-info {
+  background-color: #0f0f0f;
+}
+
+a, button {
+  transition: all 0.1s ease-in-out;
+}
+
+a:hover, button:hover, [type=button]:hover, [type=reset]:hover, [type=submit]:hover, [type=file]:hover, [type=color]:hover {
+  /* filter: brightness(110%); */
+}
+
+table.data_list {
+  border-collapse: collapse;
+}
+table.data_list th {
+  background-color: #444444;
+  line-height: 1.8rem;
+  border-top: 1px solid #BBBBBB;
+  padding: 0 0.6rem 0 0.25rem;
+}
+table.data_list td {
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid #BBBBBB;
+}
+table.data_list td.nobg {
+  border: 0 !important;
+}
+
+form.form-horizontal .form-group, form.form-vertical .form-group {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+form.form-horizontal .form-group .form-extra, form.form-vertical .form-group .form-extra {
+  display: inline-block;
+}
+form.form-horizontal .form-group .form-extra-padding, form.form-vertical .form-group .form-extra-padding {
+  display: inline-block;
+  padding: 0.25rem;
+}
+
+form.form-horizontal .form-group {
+  display: flex;
+}
+form.form-horizontal .form-group label {
+  text-align: right;
+  width: 14rem;
+  padding: 0.25rem;
+}
+
+@media all and (max-width: 768px) {
+  form.form-horizontal .form-group {
+    display: block;
+  }
+  form.form-horizontal .form-group label {
+    text-align: left;
+    display: block;
+  }
+  form.form-horizontal .form-group input[type=text], form.form-horizontal .form-group input[type=password] {
+    width: 100%;
+    max-width: 20rem;
+    display: block;
+  }
+}
+form.form-vertical .form-group label {
+  width: 100%;
+  display: block;
+  padding: 0.25rem;
+}
+form.form-vertical .form-group input[type=text], form.form-vertical .form-group input[type=password] {
+  width: 100%;
+  max-width: 20rem;
+  display: block;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.full_center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.full_center_child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.php_error {
+  font-size: 80%;
+  display: block;
+  font-family: Monospace;
+  margin: 0.15rem;
+  padding: 0.25rem;
+  border: 1px dashed #AA0000;
+  background-color: #330000;
+  color: #DDDDDD;
+}
+
+.toggle_light_box {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.3rem 0.2rem 0.1rem 0.2rem;
+  border-radius: 3rem;
+}/*# sourceMappingURL=base-dark.css.map */
