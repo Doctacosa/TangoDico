@@ -113,18 +113,13 @@ async function runSearch(value_changed?: string) {
 }
 
 
-//Monitor locale change to refresh results
-watch(locale, () => {
-	runSearch();
-});
-
-
-onMounted(async () => {
+//Load or reload the search filters as needed
+async function loadSearchFilters() {
 	const SQL = await initSqlJs({
 		locateFile: file => `https://sql.js.org/dist/${file}`
 	});
 
-	const response = await fetch('/jpdict.db');	//Chemin relatif depuis public/
+	const response = await fetch('/jpdict.db');	//Path relative to public/
 	const buffer = await response.arrayBuffer();
 	const db = new SQL.Database(new Uint8Array(buffer));
 
@@ -135,6 +130,8 @@ onMounted(async () => {
 	`);
 
 	if (result.length > 0) {
+		types.value = [];
+
 		//const columns = result[0].columns;
 		const values = result[0].values;
 		types.value.push({key: t("filter.all"), value: ""});
@@ -155,6 +152,8 @@ onMounted(async () => {
 	`);
 
 	if (result.length > 0) {
+		lessons.value = [];
+
 		//const columns = result[0].columns;
 		const values = result[0].values;
 		lessons.value.push({key: t("filter.all"), value: ""});
@@ -167,7 +166,18 @@ onMounted(async () => {
 				lessons_max = Number(lesson);
 		}
 	}
+}
 
+
+//Monitor locale change to refresh results
+watch(locale, () => {
+	loadSearchFilters();
+	runSearch();
+});
+
+
+onMounted(async () => {
+	loadSearchFilters();
 	runSearch();
 });
 </script>
