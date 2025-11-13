@@ -3,8 +3,13 @@
   "short_name": "Tango Dico",
   "start_url": "https://tango.interordi.com/",
   "display": "standalone",
-  "description": "A Japanese dictionary with filters for quick browsing.",
-  "lang": "EN",
+  "id": "com.interordi.tango",
+  "description": "A Japanese dictionary with filters for quick searching.",
+  "categories": [
+    "education",
+    "utilities"
+  ],
+  "lang": "en",
   "dir": "auto",
   "theme_color": "#6a462e",
   "background_color": "#1f130d",
@@ -14,75 +19,93 @@
       "src": "../icons/icon-48.webp",
       "type": "image/png",
       "sizes": "48x48",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../icons/icon-72.webp",
       "type": "image/png",
       "sizes": "72x72",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../icons/icon-96.webp",
       "type": "image/png",
       "sizes": "96x96",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../icons/icon-128.webp",
       "type": "image/png",
       "sizes": "128x128",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../icons/icon-192.webp",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../icons/icon-256.webp",
       "type": "image/png",
       "sizes": "256x256",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../icons/icon-512.webp",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "../icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "../icons/icon-maskable.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
       "src": "/images/previews/desktop1.png",
       "sizes": "1600x900",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "wide"
     },
     {
       "src": "/images/previews/desktop2.png",
       "sizes": "1600x900",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "wide"
     },
     {
       "src": "/images/previews/desktop3.png",
       "sizes": "1600x900",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "wide"
     },
     {
       "src": "/images/previews/mobile1.png",
       "sizes": "1080x1920",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow"
     },
     {
       "src": "/images/previews/mobile2.png",
       "sizes": "1080x1920",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow"
     },
     {
       "src": "/images/previews/mobile3.png",
       "sizes": "1080x1920",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
