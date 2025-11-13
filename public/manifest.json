@@ -55,10 +55,34 @@
   ],
   "screenshots": [
     {
-      "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
-      "sizes": "2880x1800",
-      "type": "image/png",
-      "description": "A screenshot of the home page"
+      "src": "/images/previews/desktop1.png",
+      "sizes": "1600x900",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/previews/desktop2.png",
+      "sizes": "1600x900",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/previews/desktop3.png",
+      "sizes": "1600x900",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/previews/mobile1.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/previews/mobile2.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/previews/mobile3.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
     }
   ]
 }
