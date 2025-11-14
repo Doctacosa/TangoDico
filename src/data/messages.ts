@@ -41,6 +41,14 @@ const messages = {
 				<h3>Notice</h3>
 				<p>The lessons numbering is based on the Genki manuals by The Japan Times Publishing, who do not endorse this application.</p>
 			`,
+			app:
+				`<h3>Installation</h3>
+				<p>If you prefer, you can also choose to install an app version on your devices of course.</p>
+			`,
+			app_footer:
+				`<p>Apple and App Store are trademarks of Apple Inc.</p>
+				<p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
+			`,
 		},
 		nav: {
 			about: "About",
@@ -88,7 +96,15 @@ const messages = {
 			warnings: `
 				<h3>Notice</h3>
 				<p>La numérotation des leçons est tirée du manuel Genki par The Japan Times Publishing, qui n'endossent pas cette application.</p>
-			`
+			`,
+			app:
+				`<h3>Installation</h3>
+				<p>Si vous préférez, vous pouvez aussi installer l'application sur l'appareil de votre choix.</p>
+			`,
+			app_footer:
+				`<p>Apple et App Store sont des marques de commerce de Apple Inc.</p>
+				<p>Google Play et le logo Google Play sont des marques de commerce Google LLC.</p>
+			`,
 		},
 		nav: {
 			about: "À propos",

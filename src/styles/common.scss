@@ -14,6 +14,29 @@
 }
 
 
+.web_mode, .app_mode {
+	display: none;
+}
+
+@media all and (display-mode: standalone) {
+	.app_mode {
+		display: block;
+	}
+}
+
+@media all and not (display-mode: standalone) {
+	.web_mode {
+		display: block;
+	}
+}
+
+
+.app_stores img {
+	margin: 10px;
+	height: 50px;
+}
+
+
 @supports(padding: max(0px)) {
 	#app {
 		position: relative;

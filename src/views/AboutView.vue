@@ -3,7 +3,7 @@
 
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n({ useScope: 'global' })
 </script>
 
 
@@ -19,6 +19,23 @@ const { t } = useI18n({ useScope: 'global' })
 			<div v-html="t('about.description', { email: 'tango@interordi.com' })"></div>
 
 			<div v-html="t('about.warnings')" class="warnings"></div>
+
+			<div class="web_mode">
+				<div class="app_stores">
+
+					<div v-html="t('about.app')"></div>
+
+					<a href="https://apps.apple.com/app/tango-dico/id6754865090"><img :src="'/images/badge-apple-app-store-' + locale + '.svg'" alt="Download on the Apple App Store" /></a>
+
+					<a href="https://play.google.com/store/apps/details?id=com.interordi.tango.twa"><img alt="Get it on Google Play" :src="'/images/badge-google-play-' + locale + '.png'"/></a>
+
+					<a href="https://apps.microsoft.com/detail/9NX8WJHNW01F"><img :src="'/images/badge-microsoft-' + locale + '.png'" alt="Get it from Microsoft" /></a>
+
+					<div v-html="t('about.app_footer')"></div>
+
+				</div>
+			</div>
+			<!--div class="app_mode">App mode</div-->
 		</div>
 	</div>
 </template>
