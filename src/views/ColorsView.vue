@@ -1,7 +1,7 @@
 <script setup lang="ts">
 //import DictSearch from '../components/DictSearch.vue'
 
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import initSqlJs from 'sql.js';
 import { useI18n } from 'vue-i18n'
 
@@ -79,6 +79,12 @@ function getTextColor(bgColor: string) {
 	else
 		return 'FFFFFF';
 }
+
+
+//Monitor locale change to refresh results
+watch(locale, () => {
+	runSearch();
+});
 
 
 onMounted(async () => {
