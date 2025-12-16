@@ -26,6 +26,13 @@ const navItems = ref< NavItemType[] >([
 		}
 	},
 	{
+		label: "nav.colors",
+		//icon: 'pi pi-link',
+		command: () => {
+			router.push('/colors');
+		}
+	},
+	{
 		label: "nav.about",
 		//icon: 'pi pi-link',
 		command: () => {
