@@ -10,9 +10,9 @@ const router = createRouter({
 			component: HomeView,
 		},
 		{
-			path: '/verb',
-			name: 'verb',
-			component: () => import('../views/VerbView.vue'),
+			path: '/word/:id',
+			name: 'word',
+			component: () => import('../views/WordView.vue'),
 		},
 		{
 			path: '/about',
