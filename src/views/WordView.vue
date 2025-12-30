@@ -22,8 +22,7 @@ type MatchType = {
 }
 
 const displayWord = ref({});
-const ready = ref(false);
-const wordData = ref< MatchType >();
+//const wordData = ref< MatchType >();
 
 
 async function getWord(id?: number) {
@@ -51,24 +50,23 @@ async function getWord(id?: number) {
 	stmt.bind([id]);
 
 	if (stmt.step()) {
-		wordData.value = stmt.getAsObject();
+		return stmt.getAsObject();
 	} else {
-		wordData.value = null;
+		return null;
 	}
 }
 
 
-function getConjugation() {
-	//TODO: Check verb form
-	//TODO: Kanji and/or kana
-	//... or even if it's a verb in the first place
+function getConjugation(wordData: MatchType) {
+	//TODO: Kanji and/or kana toggle
+	//TODO: Handle non-verbs
 
-	if (!wordData.value)
+	if (!wordData)
 		return;
 
-	const root = wordData.value.kana.substring(0, wordData.value.kana.length-1);
-	const ending1 = wordData.value.kana.substring(wordData.value.kana.length-1);
-	const ending2 = wordData.value.kana.substring(wordData.value.kana.length-2);
+	const root = wordData.kana.substring(0, wordData.kana.length-1);
+	const ending1 = wordData.kana.substring(wordData.kana.length-1);
+	const ending2 = wordData.kana.substring(wordData.kana.length-2);
 	let tenses = {
 		'affirmative': {
 			'present': {
@@ -92,13 +90,13 @@ function getConjugation() {
 		},
 	};
 
-	if (wordData.value.type == "v") {
-		if (wordData.value.subtype == "ru") {
+	if (wordData.type == "v") {
+		if (wordData.subtype == "ru") {
 			tenses = {
 				'affirmative': {
 					'present': {
 						'formal': root + "ます",
-						'informal': wordData.value.kana,
+						'informal': wordData.kana,
 					},
 					'past': {
 						'formal': root + "ました",
@@ -119,38 +117,38 @@ function getConjugation() {
 				't_form': root + "て",
 			}
 
-		} else if (wordData.value.subtype == "u") {
+		} else if (wordData.subtype == "u") {
 			tenses = {
 				'affirmative': {
 					'present': {
-						'formal': changeEnding(wordData.value.kana, "う", "い", "ます"),
-						'informal': wordData.value.kana,
+						'formal': changeEnding(wordData.kana, "う", "い", "ます"),
+						'informal': wordData.kana,
 					},
 					'past': {
-						'formal': changeEnding(wordData.value.kana, "う", "い", "ました"),
+						'formal': changeEnding(wordData.kana, "う", "い", "ました"),
 					},
 				},
 				'negative': {
 					'present': {
-						'formal': changeEnding(wordData.value.kana, "う", "い", "ません"),
+						'formal': changeEnding(wordData.kana, "う", "い", "ません"),
 					},
 					'past': {
-						'formal': changeEnding(wordData.value.kana, "う", "い", "ませんでした"),
+						'formal': changeEnding(wordData.kana, "う", "い", "ませんでした"),
 					},
 				},
 				//t-form
 				't_form': root + "て",
 			}
 
-			if (wordData.value.kana.endsWith("う")) {
-				tenses.negative.present.informal = changeEnding(wordData.value.kana, "う", "あ", "ない");
+			if (wordData.kana.endsWith("う")) {
+				tenses.negative.present.informal = changeEnding(wordData.kana, "う", "あ", "ない");
 				tenses.negative.present.informal = tenses.negative.present.informal.substring(0, tenses.negative.present.informal.length-3) + "わない";
 
-				tenses.negative.past.informal = changeEnding(wordData.value.kana, "う", "あ", "なかった");
+				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "なかった");
 				tenses.negative.past.informal = tenses.negative.past.informal.substring(0, tenses.negative.past.informal.length-3) + "わなかった";
 			} else {
-				tenses.negative.present.informal = changeEnding(wordData.value.kana, "う", "あ", "ない");
-				tenses.negative.past.informal = changeEnding(wordData.value.kana, "う", "あ", "なかった");
+				tenses.negative.present.informal = changeEnding(wordData.kana, "う", "あ", "ない");
+				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "なかった");
 			}
 
 			//t-form
@@ -169,22 +167,22 @@ function getConjugation() {
 			else
 				tenses.t_form = null;
 
-		} else if (wordData.value.subtype == "irr") {
+		} else if (wordData.subtype == "irr") {
 			//t-form
-			if (wordData.value.kana.endsWith("する")) {
-				tenses.negative.present.informal = wordData.value.kana.substring(0, wordData.value.kana.length - 2) + "しない";
-				tenses.t_form = wordData.value.kana.substring(0, wordData.value.kana.length - 2) + "して";
-			} else if (wordData.value.kana.endsWith("くる")) {
-				tenses.negative.present.informal = wordData.value.kana.substring(0, wordData.value.kana.length - 2) + "こない";
-				tenses.t_form = wordData.value.kana.substring(0, wordData.value.kana.length - 2) + "きて";
+			if (wordData.kana.endsWith("する")) {
+				tenses.negative.present.informal = wordData.kana.substring(0, wordData.kana.length - 2) + "しない";
+				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "して";
+			} else if (wordData.kana.endsWith("くる")) {
+				tenses.negative.present.informal = wordData.kana.substring(0, wordData.kana.length - 2) + "こない";
+				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "きて";
 			}
 		} else {
-			console.log("Unknown subtype: " + wordData.value.subtype);
+			console.log("Unknown subtype: " + wordData.subtype);
 			return tenses;
 		}
 
 	} else {
-		console.log("Unknown type: " + wordData.value.type);
+		console.log("Unknown type: " + wordData.type);
 		return tenses;
 	}
 
@@ -195,19 +193,17 @@ function getConjugation() {
 		tenses.affirmative.past.informal = tenses.t_form.substring(0, tenses.t_form.length-1) + "だ";
 
 	//Final exceptions
-	if (wordData.value.kana == "ある")
+	if (wordData.kana == "ある")
 		tenses.negative.present.informal = "ない";
 
 
 	//Catch errors on t-form
 	if (tenses.t_form == null) {
-		console.log("Unknown t-form: " + wordData.value.subtype);
+		console.log("Unknown t-form: " + wordData.subtype);
 	}
 
-	tenses.word = wordData.value.kana;
+	tenses.word = wordData.kana;
 
-
-	displayWord.value = tenses;
 	return tenses;
 }
 
@@ -250,11 +246,13 @@ function changeEnding(source: string, from: string, to: string, suffix: string) 
 
 
 //Monitor word data change to refresh results
+/*
 watch(wordData, () => {
 	getConjugation();
 });
+*/
 watch(locale, () => {
-	getConjugation();
+	//getConjugation();
 });
 
 
@@ -269,8 +267,7 @@ onMounted(async () => {
 	if (!wordId)
 		return;
 
-	getWord(wordId);
-	ready.value = true;
+	displayWord.value = getConjugation(await getWord(wordId));
 });
 </script>
 
