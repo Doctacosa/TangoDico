@@ -21,11 +21,39 @@ type MatchType = {
 	type_full: string,
 }
 
-const displayWord = ref({});
+type StrOrNull = string | null;
+
+type Tenses = {
+	'affirmative': {
+		'present': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+		'past': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+	},
+	'negative': {
+		'present': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+		'past': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+	},
+	't_form': StrOrNull,
+	'word': StrOrNull,
+};
+
+
+const displayWord = ref< Tenses >();
 //const wordData = ref< MatchType >();
 
 
-async function getWord(id?: number) {
+async function getWord(id: number) {
 	if (id == 0)
 		return null;
 
@@ -67,7 +95,7 @@ function getConjugation(wordData: MatchType) {
 	const root = wordData.kana.substring(0, wordData.kana.length-1);
 	const ending1 = wordData.kana.substring(wordData.kana.length-1);
 	const ending2 = wordData.kana.substring(wordData.kana.length-2);
-	let tenses = {
+	let tenses: Tenses = {
 		'affirmative': {
 			'present': {
 				'formal': null,
@@ -88,6 +116,8 @@ function getConjugation(wordData: MatchType) {
 				'informal': null,
 			},
 		},
+		't_form': null,
+		'word': wordData.kana,
 	};
 
 	if (wordData.type == "v") {
@@ -115,6 +145,7 @@ function getConjugation(wordData: MatchType) {
 				},
 				//t-form
 				't_form': root + "て",
+				'word': wordData.kana,
 			}
 
 		} else if (wordData.subtype == "u") {
@@ -126,18 +157,22 @@ function getConjugation(wordData: MatchType) {
 					},
 					'past': {
 						'formal': changeEnding(wordData.kana, "う", "い", "ました"),
+						'informal': null,
 					},
 				},
 				'negative': {
 					'present': {
 						'formal': changeEnding(wordData.kana, "う", "い", "ません"),
+						'informal': null,
 					},
 					'past': {
 						'formal': changeEnding(wordData.kana, "う", "い", "ませんでした"),
+						'informal': null,
 					},
 				},
 				//t-form
 				't_form': root + "て",
+				'word': wordData.kana,
 			}
 
 			if (wordData.kana.endsWith("う")) {
@@ -187,9 +222,9 @@ function getConjugation(wordData: MatchType) {
 	}
 
 	//Add past informal affirmative form
-	if (tenses.t_form.endsWith("て"))
+	if (tenses.t_form && tenses.t_form.endsWith("て"))
 		tenses.affirmative.past.informal = tenses.t_form.substring(0, tenses.t_form.length-1) + "た";
-	else if (tenses.t_form.endsWith("で"))
+	else if (tenses.t_form && tenses.t_form.endsWith("で"))
 		tenses.affirmative.past.informal = tenses.t_form.substring(0, tenses.t_form.length-1) + "だ";
 
 	//Final exceptions
@@ -277,54 +312,58 @@ onMounted(async () => {
 
 		<h2>{{ t('nav.conjugation') }}</h2>
 
-		<p v-if="displayWord.word">Infinitif / dictionnaire: {{ displayWord.word }}</p>
-		<p v-if="displayWord.t_form">Forme en -te: {{ displayWord.t_form }}</p>
+		<template v-if="displayWord">
 
-		<table v-if="Object.keys(displayWord).length" border="1">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Affirmatif</th>
-					<th>Négatif</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td rowspan="2">Non-passé</td>
-					<td v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.formal">
-						{{ displayWord.affirmative.present.formal }}
-					</td>
-					<td v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.formal">
-						{{ displayWord.negative.present.formal }}
-					</td>
-				</tr>
-				<tr>
-					<td v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.informal">
-						{{ displayWord.affirmative.present.informal }}
-					</td>
-					<td v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.informal">
-						{{ displayWord.negative.present.informal }}
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="2">Passé</td>
-					<td v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.formal">
-						{{ displayWord.affirmative.past.formal }}
-					</td>
-					<td v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.formal">
-						{{ displayWord.negative.past.formal }}
-					</td>
-				</tr>
-				<tr>
-					<td v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.informal">
-						{{ displayWord.affirmative.past.informal }}
-					</td>
-					<td v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.informal">
-						{{ displayWord.negative.past.informal }}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+			<p v-if="displayWord.word">Infinitif / dictionnaire: {{ displayWord.word }}</p>
+			<p v-if="displayWord.t_form">Forme en -te: {{ displayWord.t_form }}</p>
+
+			<table v-if="Object.keys(displayWord).length" border="1">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Affirmatif</th>
+						<th>Négatif</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="2">Non-passé</td>
+						<td v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.formal">
+							{{ displayWord.affirmative.present.formal }}
+						</td>
+						<td v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.formal">
+							{{ displayWord.negative.present.formal }}
+						</td>
+					</tr>
+					<tr>
+						<td v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.informal">
+							{{ displayWord.affirmative.present.informal }}
+						</td>
+						<td v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.informal">
+							{{ displayWord.negative.present.informal }}
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="2">Passé</td>
+						<td v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.formal">
+							{{ displayWord.affirmative.past.formal }}
+						</td>
+						<td v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.formal">
+							{{ displayWord.negative.past.formal }}
+						</td>
+					</tr>
+					<tr>
+						<td v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.informal">
+							{{ displayWord.affirmative.past.informal }}
+						</td>
+						<td v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.informal">
+							{{ displayWord.negative.past.informal }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</template>
 
 	</div>
 </template>
