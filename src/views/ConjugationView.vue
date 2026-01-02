@@ -7,13 +7,16 @@ import WordLine from '../components/WordLine.vue'
 		<table border="1">
 			<thead>
 				<tr>
-					<th></th>
-					<th>Long form</th>
+					<th rowspan="2"></th>
+					<th rowspan="2">Long form</th>
+					<th colspan="4">Short form</th>
+					<th rowspan="2">T-form</th>
+				</tr>
+				<tr>
 					<th>Present aff.</th>
 					<th>Present neg.</th>
 					<th>Past aff.</th>
 					<th>Past Neg.</th>
-					<th>T-form</th>
 				</tr>
 			</thead>
 			<tbody>
