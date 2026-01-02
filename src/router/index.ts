@@ -15,6 +15,11 @@ const router = createRouter({
 			component: () => import('../views/WordView.vue'),
 		},
 		{
+			path: '/conjugation',
+			name: 'conjugation',
+			component: () => import('../views/ConjugationView.vue'),
+		},
+		{
 			path: '/colors',
 			name: 'colors',
 			component: () => import('../views/ColorsView.vue'),
