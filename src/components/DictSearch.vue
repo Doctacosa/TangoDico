@@ -258,7 +258,7 @@ onMounted(async () => {
 
 			<template v-for="row in matches" :key="row.id">
 				<div class="meaning" v-if="row.type == 'adj' || row.type == 'n' || row.type == 'v'"><RouterLink :to="'/word/' + row.kana + '-' + row.id">{{ row.meaning }}</RouterLink></div>
-				<div class="meaning" v-else>{{ row.meaning }} {{  row.type }}</div>
+				<div class="meaning" v-else>{{ row.meaning }}</div>
 				<div class="kana">{{ row.kana }}</div>
 				<div class="kanji1">{{ row.kanji }}</div>
 				<div class="type">{{ t("word_type." + row.type) }} <span v-if="row.subtype">({{ row.subtype }})</span></div>
