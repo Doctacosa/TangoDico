@@ -25,6 +25,11 @@ const router = createRouter({
 			component: () => import('../views/ColorsView.vue'),
 		},
 		{
+			path: '/matching',
+			name: 'matching',
+			component: () => import('../views/utilities/MatchingView.vue'),
+		},
+		{
 			path: '/about',
 			name: 'about',
 			// route level code-splitting
