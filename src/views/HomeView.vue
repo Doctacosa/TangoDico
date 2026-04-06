@@ -4,6 +4,6 @@ import DictSearch from '../components/DictSearch.vue'
 
 <template>
 	<main>
-		<DictSearch />
+		<DictSearch v-bind="$attrs" />
 	</main>
 </template>

@@ -17,6 +17,8 @@ type NavItemType = {
 	command: () => void;
 };
 
+const devMode = ref(false);
+
 const navItems = ref< NavItemType[] >([
 	{
 		label: "nav.home",
@@ -80,7 +82,10 @@ for (const x in availableLocales) {
 		v-slot="{ Component }"
 	>
 		<Transition name="fade" mode="out-in">
-			<Component :is="Component" />
+			<Component
+				:is="Component"
+				:dev-mode="devMode"
+			/>
 		</Transition>
 	</RouterView>
 

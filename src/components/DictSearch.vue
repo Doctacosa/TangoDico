@@ -7,6 +7,10 @@ import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 
+const props = defineProps({
+	devMode: Boolean,
+});
+
 type MatchType = {
 	id: number,
 	kana: string,
@@ -257,7 +261,10 @@ onMounted(async () => {
 			<div class="kanji2"><b>{{ t("search.kanji") }}</b></div>
 
 			<template v-for="row in matches" :key="row.id">
-				<div class="meaning" v-if="row.type == 'adj' || row.type == 'n' || row.type == 'v'"><RouterLink :to="'/word/' + row.kana + '-' + row.id">{{ row.meaning }}</RouterLink></div>
+				<div
+					class="meaning"
+					v-if="props.devMode && (row.type == 'adj' || row.type == 'n' || row.type == 'v')"
+				><RouterLink :to="'/word/' + row.kana + '-' + row.id">{{ row.meaning }}</RouterLink></div>
 				<div class="meaning" v-else>{{ row.meaning }}</div>
 				<div class="kana">{{ row.kana }}</div>
 				<div class="kanji1">{{ row.kanji }}</div>
