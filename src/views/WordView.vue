@@ -456,7 +456,7 @@ onMounted(async () => {
 			<p v-if="displayWord.word">Infinitif / dictionnaire: {{ displayWord.word }}</p>
 			<p v-if="displayWord.t_form">Forme en -te: {{ displayWord.t_form }}</p>
 
-			<table v-if="Object.keys(displayWord).length" border="1">
+			<table v-if="Object.keys(displayWord).length">
 				<thead>
 					<tr>
 						<th></th>
@@ -509,4 +509,17 @@ onMounted(async () => {
 
 
 <style>
+table {
+	margin: 0 auto;
+	border-collapse: collapse;
+
+	th {
+		background-color: #6a462e77;
+	}
+
+	th, td {
+		padding: 6px;
+		border: 1px solid #6a462e77;
+	}
+}
 </style>
