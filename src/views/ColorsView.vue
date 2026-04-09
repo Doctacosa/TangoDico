@@ -147,7 +147,8 @@ onMounted(async () => {
 @media all and (max-width: 600px) {
 	.words_list {
 		> * {
-			grid-template-columns: repeat(3, auto);
+			/* grid-template-columns: repeat(3, auto); */
+			grid-template-columns: 20% auto 20%;
 			grid-auto-rows: auto;
 
 			.meaning {
