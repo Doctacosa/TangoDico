@@ -57,8 +57,8 @@ const displayWord = ref< Tenses >();
 //const wordData = ref< MatchType >();
 
 
-async function getWord(id: number) {
-	if (id == 0)
+async function getWord(id?: number) {
+	if (typeof id == 'undefined' || id == 0)
 		return null;
 
 	const SQL = await initSqlJs({
@@ -82,14 +82,14 @@ async function getWord(id: number) {
 	stmt.bind([id]);
 
 	if (stmt.step()) {
-		return stmt.getAsObject();
+		return stmt.getAsObject() as MatchType;
 	} else {
 		return null;
 	}
 }
 
 
-function getConjugation(wordData: MatchType) {
+function getConjugation(wordData: MatchType | null) {
 	//TODO: Kanji and/or kana toggle
 
 	if (!wordData)

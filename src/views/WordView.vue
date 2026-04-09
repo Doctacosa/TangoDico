@@ -78,14 +78,14 @@ async function getWord(id: number) {
 	stmt.bind([id]);
 
 	if (stmt.step()) {
-		return stmt.getAsObject();
+		return stmt.getAsObject() as MatchType;
 	} else {
 		return null;
 	}
 }
 
 
-function getConjugation(wordData: MatchType) {
+function getConjugation(wordData: MatchType | null) {
 	//TODO: Kanji and/or kana toggle
 
 	if (!wordData)
@@ -433,11 +433,11 @@ watch(locale, () => {
 onMounted(async () => {
 	//const urlPath = "あける-19";
 	const route = useRoute();
-	const urlPath = route.params.id;
+	const urlPath = route.params.id.toString();
 	//TODO: Display error on word not found
 	if (!urlPath.includes("-"))
 		return;
-	const wordId = urlPath.substring(urlPath.lastIndexOf("-")+1);
+	const wordId = parseInt(urlPath.substring(urlPath.lastIndexOf("-")+1));
 	if (!wordId)
 		return;
 

@@ -7,11 +7,39 @@ import { useI18n } from 'vue-i18n'
 const { t, locale } = useI18n({ useScope: 'global' })
 
 
-const displayWord = ref({});
+type StrOrNull = string | null;
+
+type Tenses = {
+	'affirmative': {
+		'present': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+		'past': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+	},
+	'negative': {
+		'present': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+		'past': {
+			'formal': StrOrNull,
+			'informal': StrOrNull,
+		},
+	},
+	't_form': StrOrNull,
+	'word': StrOrNull,
+};
+
+
+const displayWord = ref< Tenses >();
 const ready = ref(false);
 
 
-function getConjugation(verb: string, type, subtype) {
+function getConjugation(verb: string, type: string, subtype: string) {
 	//TODO: Check verb form
 	//TODO: Kanji and/or kana
 	//... or even if it's a verb in the first place
@@ -38,6 +66,8 @@ function getConjugation(verb: string, type, subtype) {
 				'informal': root + "なかった",
 			},
 		},
+		't_form': "",
+		'word': "",
 	}
 
 	return tenses;
@@ -52,7 +82,7 @@ onMounted(async () => {
 
 
 <template>
-	<div>
+	<div v-if="displayWord">
 
 		<h2>{{ t('nav.conjugation') }}</h2>
 
