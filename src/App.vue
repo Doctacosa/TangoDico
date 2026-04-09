@@ -18,6 +18,7 @@ type NavItemType = {
 };
 
 const devMode = ref(false);
+const devModeCount = ref(0);
 
 const navItems = ref< NavItemType[] >([
 	{
@@ -52,6 +53,16 @@ for (const x in availableLocales) {
 		value: locale,
 	});
 }
+
+
+//Toggle the dev mode
+async function toggleDevMode() {
+	devModeCount.value++;
+	if (devModeCount.value >= 5) {
+		devMode.value = !devMode.value;
+		devModeCount.value = 0;
+	}
+}
 </script>
 
 
@@ -85,9 +96,15 @@ for (const x in availableLocales) {
 			<Component
 				:is="Component"
 				:dev-mode="devMode"
+				@toggle-dev-mode="toggleDevMode"
 			/>
 		</Transition>
 	</RouterView>
+
+	<div v-if="devMode" class="alert-warning dev_mode">
+		{{ t("message.dev_mode") }}
+	</div>
+
 
 	<!--RouterLink to="/">{{ t("nav.home") }}</RouterLink-->
 </template>
@@ -128,5 +145,9 @@ footer {
 }
 .fade-enter, .fade-leave-to {
 	opacity: 0;
+}
+
+.dev_mode {
+	margin-top: 30px;
 }
 </style>

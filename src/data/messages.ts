@@ -3,6 +3,7 @@ const messages = {
 	en: {
 		message: {
 			hello: "Hi everybody!",
+			dev_mode: "Dev mode is enabled.",
 		},
 		filter: {
 			all: "All",
@@ -60,7 +61,8 @@ const messages = {
 	},
 	fr: {
 		message: {
-			hello: "Salut tout le monde!"
+			hello: "Salut tout le monde!",
+			dev_mode: "Le mode dev est activé.",
 		},
 		filter: {
 			all: "Tous",

@@ -4,12 +4,14 @@
 import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n({ useScope: 'global' })
+
+const emit = defineEmits(['toggle-dev-mode']);
 </script>
 
 
 <template>
 	<div>
-		<header>
+		<header @click="emit('toggle-dev-mode')">
 			<img src="@/assets/logo.png" alt="Logo" class="logo" />
 		</header>
 
