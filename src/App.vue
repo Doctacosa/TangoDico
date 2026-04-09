@@ -22,7 +22,7 @@ const devModeCount = ref(0);
 
 const navItems = ref< NavItemType[] >([
 	{
-		label: "nav.home",
+		label: "nav.dictionary",
 		//icon: 'pi pi-link',
 		command: () => {
 			router.push('/');
