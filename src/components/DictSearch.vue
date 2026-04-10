@@ -63,7 +63,7 @@ async function runSearch(value_changed?: string) {
 		search_lesson_min.value = search_lesson_max.value;
 
 	const SQL = await initSqlJs({
-		locateFile: file => `/node_modules/sql.js/dist/${file}`
+		locateFile: () => `/sql-wasm.wasm`
 	});
 
 	const response = await fetch('/jpdict.db');	//Path relative to public/
@@ -120,7 +120,7 @@ async function runSearch(value_changed?: string) {
 //Load or reload the search filters as needed
 async function loadSearchFilters() {
 	const SQL = await initSqlJs({
-		locateFile: file => `/node_modules/sql.js/dist/${file}`
+		locateFile: () => `/sql-wasm.wasm`
 	});
 
 	const response = await fetch('/jpdict.db');	//Path relative to public/

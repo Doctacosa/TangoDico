@@ -58,7 +58,7 @@ async function getWord(id: number) {
 		return null;
 
 	const SQL = await initSqlJs({
-		locateFile: file => `https://sql.js.org/dist/${file}`
+		locateFile: () => `/sql-wasm.wasm`
 	});
 
 	const response = await fetch('/jpdict.db');	//Path relative to public/

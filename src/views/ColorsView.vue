@@ -28,7 +28,7 @@ const keyword = ref("");
 //Functions
 async function runSearch() {
 	const SQL = await initSqlJs({
-		locateFile: file => `https://sql.js.org/dist/${file}`
+		locateFile: () => `/sql-wasm.wasm`
 	});
 
 	const response = await fetch('/jpdict.db');	//Path relative to public/
