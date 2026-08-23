@@ -124,26 +124,26 @@ function getConjugation(wordData: MatchType | null) {
 			tenses = {
 				'affirmative': {
 					'present': {
-						'formal': root + "ます",
+						'formal': root + "*ます",
 						'informal': wordData.kana,
 					},
 					'past': {
-						'formal': root + "ました",
-						'informal': root + "た",
+						'formal': root + "*ました",
+						'informal': root + "*た",
 					},
 				},
 				'negative': {
 					'present': {
-						'formal': root + "ません",
-						'informal': root + "ない",
+						'formal': root + "*ません",
+						'informal': root + "*ない",
 					},
 					'past': {
-						'formal': root + "ませんでした",
-						'informal': root + "なかった",
+						'formal': root + "*ませんでした",
+						'informal': root + "*なかった",
 					},
 				},
 				//t-form
-				't_form': root + "て",
+				't_form': root + "*て",
 				'word': wordData.kana,
 			}
 
@@ -176,10 +176,10 @@ function getConjugation(wordData: MatchType | null) {
 
 			if (wordData.kana.endsWith("う")) {
 				tenses.negative.present.informal = changeEnding(wordData.kana, "う", "あ", "ない");
-				tenses.negative.present.informal = tenses.negative.present.informal.substring(0, tenses.negative.present.informal.length-3) + "わない";
+				tenses.negative.present.informal = tenses.negative.present.informal.substring(0, tenses.negative.present.informal.length-3) + "*わない";
 
-				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "なかった");
-				tenses.negative.past.informal = tenses.negative.past.informal.substring(0, tenses.negative.past.informal.length-5) + "わなかった";
+				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "*なかった");
+				tenses.negative.past.informal = tenses.negative.past.informal.substring(0, tenses.negative.past.informal.length-5) + "*わなかった";
 			} else {
 				tenses.negative.present.informal = changeEnding(wordData.kana, "う", "あ", "ない");
 				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "なかった");
@@ -187,25 +187,25 @@ function getConjugation(wordData: MatchType | null) {
 
 			//t-form
 			if (ending1 == "う" || ending1 == "つ" || ending1 == "る")
-				tenses.t_form = root + "って";
+				tenses.t_form = root + "*って";
 			else if (ending1 == "む" || ending1 == "ぶ" || ending1 == "ぬ")
-				tenses.t_form = root + "んで";
+				tenses.t_form = root + "*んで";
 			else if (ending2 == "いく")
-				tenses.t_form = root + "って";
+				tenses.t_form = root + "*って";
 			else if (ending1 == "く")
-				tenses.t_form = root + "いて";
+				tenses.t_form = root + "*いて";
 			else if (ending1 == "ぐ")
-				tenses.t_form = root + "いで";
+				tenses.t_form = root + "*いで";
 			else if (ending1 == "す")
-				tenses.t_form = root + "して";
+				tenses.t_form = root + "*して";
 			else
 				tenses.t_form = null;
 
 			//Add past informal affirmative form
 			if (tenses.t_form && tenses.t_form.endsWith("て"))
-				tenses.affirmative.past.informal = tenses.t_form.substring(0, tenses.t_form.length-1) + "た";
+				tenses.affirmative.past.informal = tenses.t_form.replace("*", "").substring(0, tenses.t_form.replace("*", "").length-1) + "*た";
 			else if (tenses.t_form && tenses.t_form.endsWith("で"))
-				tenses.affirmative.past.informal = tenses.t_form.substring(0, tenses.t_form.length-1) + "だ";
+				tenses.affirmative.past.informal = tenses.t_form.replace("*", "").substring(0, tenses.t_form.replace("*", "").length-1) + "*だ";
 
 			//Final exceptions
 			if (wordData.kana == "ある") {
@@ -218,48 +218,48 @@ function getConjugation(wordData: MatchType | null) {
 			if (wordData.kana.endsWith("する")) {
 				tenses.affirmative = {
 					'present': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "します",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*します",
 						'informal': wordData.kana,
 					},
 					'past': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "しました",
-						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "した",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*しました",
+						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "*した",
 					}
 				}
 				tenses.negative = {
 					'present': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "しません",
-						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "しない",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*しません",
+						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "*しない",
 					},
 					'past': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "しませんでした",
-						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "しなかった",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*しませんでした",
+						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "*しなかった",
 					}
 				}
-				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "して";
+				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "*して";
 
 			} else if (wordData.kana.endsWith("くる")) {
 				tenses.affirmative = {
 					'present': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "きます",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*きます",
 						'informal': wordData.kana,
 					},
 					'past': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "きました",
-						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "きた",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*きました",
+						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "*きた",
 					}
 				}
 				tenses.negative = {
 					'present': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "きません",
-						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "こない",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*きません",
+						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "*こない",
 					},
 					'past': {
-						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "きました",
-						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "こなかった",
+						'formal': wordData.kana.substring(0, wordData.kana.length - 2) + "*きました",
+						'informal': wordData.kana.substring(0, wordData.kana.length - 2) + "*こなかった",
 					}
 				}
-				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "きて";
+				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "*きて";
 			}
 		} else {
 			console.log("Unknown subtype: " + wordData.subtype);
@@ -271,6 +271,7 @@ function getConjugation(wordData: MatchType | null) {
 			//いい exception
 			let wordBase = null;
 			if (wordData.kana.endsWith("いい")) {
+				//TODO: Mark the よ replacement?
 				wordBase = wordData.kana.substring(0, wordData.kana.length - 2) + "よ";
 			} else {
 				wordBase = wordData.kana.substring(0, wordData.kana.length - 1);
@@ -278,32 +279,32 @@ function getConjugation(wordData: MatchType | null) {
 			tenses = {
 				'affirmative': {
 					'present': {
-						'formal': wordData.kana + "です",
-						'informal': wordBase + "い",
+						'formal': wordData.kana + "*です",
+						'informal': wordBase + "*い",
 					},
 					'past': {
-						'formal': wordData.kana + "かったです",
-						'informal': wordBase + "かった",
+						'formal': wordData.kana + "*かったです",
+						'informal': wordBase + "*かった",
 					},
 				},
 				'negative': {
 					'present': {
-						'formal': wordBase + "くないです",
-						'informal': wordBase + "くない",
+						'formal': wordBase + "*くないです",
+						'informal': wordBase + "*くない",
 					},
 					'past': {
-						'formal': wordBase + "くなかったです",
-						'informal': wordBase + "くなかった",
+						'formal': wordBase + "*くなかったです",
+						'informal': wordBase + "*くなかった",
 					},
 				},
-				't_form': wordBase + "くて",
+				't_form': wordBase + "*くて",
 				'word': wordBase,
 			};
 
 			//Exception
 			if (wordData.kana.endsWith("いい")) {
 				tenses.word = wordData.kana;
-				tenses.affirmative.present.formal = wordData.kana + "です";
+				tenses.affirmative.present.formal = wordData.kana + "*です";
 				tenses.affirmative.present.informal = wordData.kana;
 			}
 
@@ -312,25 +313,25 @@ function getConjugation(wordData: MatchType | null) {
 			tenses = {
 				'affirmative': {
 					'present': {
-						'formal': wordBase + "です",
-						'informal': wordBase + "だ",
+						'formal': wordBase + "*です",
+						'informal': wordBase + "*だ",
 					},
 					'past': {
-						'formal': wordBase + "でした",
-						'informal': wordBase + "だった",
+						'formal': wordBase + "*でした",
+						'informal': wordBase + "*だった",
 					},
 				},
 				'negative': {
 					'present': {
-						'formal': wordBase + "じゃないです",
-						'informal': wordBase + "じゃない",
+						'formal': wordBase + "*じゃないです",
+						'informal': wordBase + "*じゃない",
 					},
 					'past': {
-						'formal': wordBase + "じゃなかったです",
-						'informal': wordBase + "じゃなかった",
+						'formal': wordBase + "*じゃなかったです",
+						'informal': wordBase + "*じゃなかった",
 					},
 				},
-				't_form': wordBase + "で",
+				't_form': wordBase + "*で",
 				'word': wordBase,
 			};
 
@@ -343,25 +344,25 @@ function getConjugation(wordData: MatchType | null) {
 		tenses = {
 			'affirmative': {
 				'present': {
-					'formal': wordData.kana + "です",
-					'informal': wordData.kana + "だ",
+					'formal': wordData.kana + "*です",
+					'informal': wordData.kana + "*だ",
 				},
 				'past': {
-					'formal': wordData.kana + "でした",
-					'informal': wordData.kana + "だった",
+					'formal': wordData.kana + "*でした",
+					'informal': wordData.kana + "*だった",
 				},
 			},
 			'negative': {
 				'present': {
-					'formal': wordData.kana + "じゃないです",
-					'informal': wordData.kana + "じゃない",
+					'formal': wordData.kana + "*じゃないです",
+					'informal': wordData.kana + "*じゃない",
 				},
 				'past': {
-					'formal': wordData.kana + "じゃなかったです",
-					'informal': wordData.kana + "じゃなかった",
+					'formal': wordData.kana + "*じゃなかったです",
+					'informal': wordData.kana + "*じゃなかった",
 				},
 			},
-			't_form': wordData.kana + "で",
+			't_form': wordData.kana + "*で",
 			'word': wordData.kana,
 		};
 
@@ -378,6 +379,33 @@ function getConjugation(wordData: MatchType | null) {
 
 	tenses.word = wordData.kana;
 
+	//Return the list with flagged changes
+	return flagChanges(tenses, wordData.kana);
+}
+
+
+//Flag all the changed forms
+function flagChanges(tenses: Tenses, word: string) {
+	//for (const key of Object.keys(tenses) as (keyof Tenses)[]) {
+		for (const key in tenses) {
+		// @ts-expect-error Ignore warning on `tenses[key]`
+		const match = tenses[key];
+		if (typeof match == "string") {
+			if (match.includes("*"))
+				// @ts-expect-error Ignore warning on `tenses[key]`
+			tenses[key] = match.replace("*", "<u>") + "</u>";
+			// @ts-expect-error Ignore warning on `tenses[key]`
+			if (!tenses[key].includes("<u>") && tenses[key] != word)
+				// @ts-expect-error Ignore warning on `tenses[key]`
+				tenses[key] = "<u>" + tenses[key] + "</u>";
+		} else if (typeof match == "object") {
+			// @ts-expect-error Ignore warning on `tenses[key]`
+			tenses[key] = flagChanges(match, word);
+		} else {
+			console.log("Unknown type " + typeof match + " on " + match);
+		}
+	}
+
 	return tenses;
 }
 
@@ -389,27 +417,27 @@ function changeEnding(source: string, from: string, to: string, suffix: string) 
 	const ending = source.substring(source.length-1);
 
 	if (to == "あ") {
-		if (ending == "う")			result = root + "あ";
-		else if (ending == "く")	result = root + "か";
-		else if (ending == "す")	result = root + "さ";
-		else if (ending == "つ")	result = root + "た";
-		else if (ending == "ぬ")	result = root + "な";
-		else if (ending == "ふ")	result = root + "は";
-		else if (ending == "む")	result = root + "ま";
-		else if (ending == "る")	result = root + "ら";
-		else if (ending == "ぐ")	result = root + "が";
-		else if (ending == "ぶ")	result = root + "ば";
+		if (ending == "う")			result = root + "*あ";
+		else if (ending == "く")	result = root + "*か";
+		else if (ending == "す")	result = root + "*さ";
+		else if (ending == "つ")	result = root + "*た";
+		else if (ending == "ぬ")	result = root + "*な";
+		else if (ending == "ふ")	result = root + "*は";
+		else if (ending == "む")	result = root + "*ま";
+		else if (ending == "る")	result = root + "*ら";
+		else if (ending == "ぐ")	result = root + "*が";
+		else if (ending == "ぶ")	result = root + "*ば";
 	} else if (to == "い") {
-		if (ending == "う")			result = root + "い";
-		else if (ending == "く")	result = root + "き";
-		else if (ending == "す")	result = root + "し";
-		else if (ending == "つ")	result = root + "ち";
-		else if (ending == "ぬ")	result = root + "に";
-		else if (ending == "ふ")	result = root + "ひ";
-		else if (ending == "む")	result = root + "み";
-		else if (ending == "る")	result = root + "り";
-		else if (ending == "ぐ")	result = root + "ぎ";
-		else if (ending == "ぶ")	result = root + "び";
+		if (ending == "う")			result = root + "*い";
+		else if (ending == "く")	result = root + "*き";
+		else if (ending == "す")	result = root + "*し";
+		else if (ending == "つ")	result = root + "*ち";
+		else if (ending == "ぬ")	result = root + "*に";
+		else if (ending == "ふ")	result = root + "*ひ";
+		else if (ending == "む")	result = root + "*み";
+		else if (ending == "る")	result = root + "*り";
+		else if (ending == "ぐ")	result = root + "*ぎ";
+		else if (ending == "ぶ")	result = root + "*び";
 	}
 
 	if (suffix != null)
@@ -453,8 +481,14 @@ onMounted(async () => {
 
 		<template v-if="displayWord">
 
-			<p v-if="displayWord.word">Infinitif / dictionnaire: {{ displayWord.word }}</p>
-			<p v-if="displayWord.t_form">Forme en -te: {{ displayWord.t_form }}</p>
+			<p v-if="displayWord.word">
+				Infinitif / dictionnaire:
+				<span v-html="displayWord.word"></span>
+			</p>
+			<p v-if="displayWord.t_form">
+				Forme en -te:
+				<span v-html="displayWord.t_form"></span>
+			</p>
 
 			<table v-if="Object.keys(displayWord).length">
 				<thead>
@@ -467,37 +501,45 @@ onMounted(async () => {
 				<tbody>
 					<tr>
 						<td rowspan="2">Non-passé</td>
-						<td v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.formal">
-							{{ displayWord.affirmative.present.formal }}
-						</td>
-						<td v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.formal">
-							{{ displayWord.negative.present.formal }}
-						</td>
+						<td
+							v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.formal"
+							v-html="displayWord.affirmative.present.formal"
+						></td>
+						<td
+							v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.formal"
+							v-html="displayWord.negative.present.formal"
+						></td>
 					</tr>
 					<tr>
-						<td v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.informal">
-							{{ displayWord.affirmative.present.informal }}
-						</td>
-						<td v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.informal">
-							{{ displayWord.negative.present.informal }}
-						</td>
+						<td
+							v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.informal"
+							v-html="displayWord.affirmative.present.informal"
+						></td>
+						<td
+							v-if="displayWord.negative && displayWord.negative.present && displayWord.negative.present.informal"
+							v-html="displayWord.negative.present.informal"
+						></td>
 					</tr>
 					<tr>
 						<td rowspan="2">Passé</td>
-						<td v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.formal">
-							{{ displayWord.affirmative.past.formal }}
-						</td>
-						<td v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.formal">
-							{{ displayWord.negative.past.formal }}
-						</td>
+						<td
+							v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.formal"
+							v-html="displayWord.affirmative.past.formal"
+						></td>
+						<td
+							v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.formal"
+							v-html="displayWord.negative.past.formal"
+						></td>
 					</tr>
 					<tr>
-						<td v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.informal">
-							{{ displayWord.affirmative.past.informal }}
-						</td>
-						<td v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.informal">
-							{{ displayWord.negative.past.informal }}
-						</td>
+						<td
+							v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.informal"
+							v-html="displayWord.affirmative.past.informal"
+						></td>
+						<td
+							v-if="displayWord.negative && displayWord.negative.past && displayWord.negative.past.informal"
+							v-html="displayWord.negative.past.informal"
+						></td>
 					</tr>
 				</tbody>
 			</table>
