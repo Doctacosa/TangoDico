@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import router from './router'
 import { useI18n } from 'vue-i18n'
+import localforage from 'localforage'
 
 const { t, availableLocales } = useI18n({ useScope: 'global' })
 
@@ -17,7 +18,7 @@ type NavItemType = {
 	command: () => void;
 };
 
-const devMode = ref(false);
+const devMode = ref< boolean | null>(false);
 const devModeCount = ref(0);
 
 const navItems = ref< NavItemType[] >([
@@ -60,9 +61,17 @@ async function toggleDevMode() {
 	devModeCount.value++;
 	if (devModeCount.value >= 5) {
 		devMode.value = !devMode.value;
+		localforage.setItem('dev_mode', devMode.value);
 		devModeCount.value = 0;
 	}
 }
+
+onMounted(async () => {
+	//Load the dev mode status if already stored
+	localforage.getItem< boolean >('dev_mode').then(value => {
+		devMode.value = value;
+	});
+});
 </script>
 
 
