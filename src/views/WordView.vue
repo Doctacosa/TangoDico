@@ -50,7 +50,7 @@ type Tenses = {
 
 
 const displayWord = ref< Tenses >();
-//const wordData = ref< MatchType >();
+const sourceWord = ref< MatchType | null >();
 
 
 async function getWord(id: number) {
@@ -87,6 +87,8 @@ async function getWord(id: number) {
 
 function getConjugation(wordData: MatchType | null) {
 	//TODO: Kanji and/or kana toggle
+
+	sourceWord.value = wordData;
 
 	if (!wordData)
 		return;
@@ -477,7 +479,21 @@ onMounted(async () => {
 <template>
 	<div>
 
-		<h2>{{ t('nav.conjugation') }}</h2>
+		<template v-if="sourceWord">
+			<h2 v-if="sourceWord.kana != sourceWord.kanji && sourceWord.kanji != null">
+				{{ sourceWord.kanji }} | {{ sourceWord.kana }}
+			</h2>
+			<h2 v-else>
+				{{ sourceWord.kana }}
+			</h2>
+			<h3 style="text-transform: none;">{{ sourceWord.meaning }}</h3>
+			<div>{{ t("word_type." + sourceWord.type) }} <span v-if="sourceWord.subtype">({{ sourceWord.subtype }})</span></div>
+			<div>{{ t("search.lesson") }} {{ sourceWord.lesson }}</div>
+
+		</template>
+
+
+		<h3>{{ t('nav.conjugation') }}</h3>
 
 		<template v-if="displayWord">
 
