@@ -31,6 +31,14 @@ const messages = {
 			suf: "Suffix",
 			v: "Verb",
 		},
+		word_page: {
+			infinitive: "Infinitive / dictionary",
+			t_form: "-t form",
+			positive: "Positive",
+			negative: "Negative",
+			present: "Non-past",
+			past: "Past",
+		},
 		about: {
 			title: "About",
 			description: `
@@ -89,6 +97,14 @@ const messages = {
 			pre: "Préfixe",
 			suf: "Suffixe",
 			v: "Verbe",
+		},
+		word_page: {
+			infinitive: "Infinitif / dictionnaire",
+			t_form: "Forme en -te",
+			positive: "Affirmatif",
+			negative: "Négatif",
+			present: "Non-passé",
+			past: "Passé",
 		},
 		about: {
 			title: "À propos",

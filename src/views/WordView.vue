@@ -498,11 +498,11 @@ onMounted(async () => {
 		<template v-if="displayWord">
 
 			<p v-if="displayWord.word">
-				Infinitif / dictionnaire:
+				{{ t('word_page.infinitive') }}:
 				<span v-html="displayWord.word"></span>
 			</p>
 			<p v-if="displayWord.t_form">
-				Forme en -te:
+				{{ t('word_page.t_form') }}:
 				<span v-html="displayWord.t_form"></span>
 			</p>
 
@@ -510,13 +510,13 @@ onMounted(async () => {
 				<thead>
 					<tr>
 						<th></th>
-						<th>Affirmatif</th>
-						<th>Négatif</th>
+						<th>{{ t('word_page.positive') }}</th>
+						<th>{{ t('word_page.negative') }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td rowspan="2">Non-passé</td>
+						<td rowspan="2">{{ t('word_page.present') }}</td>
 						<td
 							v-if="displayWord.affirmative && displayWord.affirmative.present && displayWord.affirmative.present.formal"
 							v-html="displayWord.affirmative.present.formal"
@@ -537,7 +537,7 @@ onMounted(async () => {
 						></td>
 					</tr>
 					<tr>
-						<td rowspan="2">Passé</td>
+						<td rowspan="2">{{ t('word_page.past') }}</td>
 						<td
 							v-if="displayWord.affirmative && displayWord.affirmative.past && displayWord.affirmative.past.formal"
 							v-html="displayWord.affirmative.past.formal"
