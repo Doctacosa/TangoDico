@@ -178,10 +178,10 @@ function getConjugation(wordData: MatchType | null) {
 
 			if (wordData.kana.endsWith("う")) {
 				tenses.negative.present.informal = changeEnding(wordData.kana, "う", "あ", "ない");
-				tenses.negative.present.informal = tenses.negative.present.informal.substring(0, tenses.negative.present.informal.length-3) + "*わない";
+				tenses.negative.present.informal = tenses.negative.present.informal.substring(0, tenses.negative.present.informal.length-3) + "わない";
 
 				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "*なかった");
-				tenses.negative.past.informal = tenses.negative.past.informal.substring(0, tenses.negative.past.informal.length-5) + "*わなかった";
+				tenses.negative.past.informal = tenses.negative.past.informal.substring(0, tenses.negative.past.informal.length-6) + "わなかった";
 			} else {
 				tenses.negative.present.informal = changeEnding(wordData.kana, "う", "あ", "ない");
 				tenses.negative.past.informal = changeEnding(wordData.kana, "う", "あ", "なかった");
