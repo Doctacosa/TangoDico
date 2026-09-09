@@ -45,6 +45,7 @@ type Tenses = {
 		},
 	},
 	't_form': StrOrNull,
+	'potential': StrOrNull,
 	'word': StrOrNull,
 };
 
@@ -118,6 +119,7 @@ function getConjugation(wordData: MatchType | null) {
 			},
 		},
 		't_form': null,
+		'potential': null,
 		'word': wordData.kana,
 	};
 
@@ -146,6 +148,7 @@ function getConjugation(wordData: MatchType | null) {
 				},
 				//t-form
 				't_form': root + "*て",
+				'potential': changeEnding(wordData.kana, "る", "potential"),
 				'word': wordData.kana,
 			}
 
@@ -173,6 +176,7 @@ function getConjugation(wordData: MatchType | null) {
 				},
 				//t-form
 				't_form': root + "て",
+				'potential': changeEnding(wordData.kana, "う", "potential"),
 				'word': wordData.kana,
 			}
 
@@ -214,6 +218,8 @@ function getConjugation(wordData: MatchType | null) {
 				tenses.negative.present.informal = "ない";
 				tenses.negative.past.informal = "なかった";
 			}
+			if (wordData.kana == "わかる")
+				tenses.potential = "わかる";
 
 		} else if (wordData.subtype == "irr") {
 			//t-form
@@ -239,6 +245,7 @@ function getConjugation(wordData: MatchType | null) {
 					}
 				}
 				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "*して";
+				tenses.potential = wordData.kana.substring(0, wordData.kana.length - 2) + "*できる";
 
 			} else if (wordData.kana.endsWith("くる")) {
 				tenses.affirmative = {
@@ -262,6 +269,7 @@ function getConjugation(wordData: MatchType | null) {
 					}
 				}
 				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "*きて";
+				tenses.potential = wordData.kana.substring(0, wordData.kana.length - 2) + "*こられる";
 			}
 		} else {
 			console.log("Unknown subtype: " + wordData.subtype);
@@ -300,6 +308,7 @@ function getConjugation(wordData: MatchType | null) {
 					},
 				},
 				't_form': wordBase + "*くて",
+				'potential': null,
 				'word': wordBase,
 			};
 
@@ -334,6 +343,7 @@ function getConjugation(wordData: MatchType | null) {
 					},
 				},
 				't_form': wordBase + "*で",
+				'potential': null,
 				'word': wordBase,
 			};
 
@@ -365,6 +375,7 @@ function getConjugation(wordData: MatchType | null) {
 				},
 			},
 			't_form': wordData.kana + "*で",
+			'potential': null,
 			'word': wordData.kana,
 		};
 
@@ -413,7 +424,7 @@ function flagChanges(tenses: Tenses, word: string) {
 
 
 //Change the ending of a verb based on predefined rules
-function changeEnding(source: string, from: string, to: string, suffix: string) {
+function changeEnding(source: string, from: string, to: string, suffix: string = "") {
 	let result = source;
 	const root = source.substring(0, source.length-1);
 	const ending = source.substring(source.length-1);
@@ -440,9 +451,21 @@ function changeEnding(source: string, from: string, to: string, suffix: string) 
 		else if (ending == "る")	result = root + "*り";
 		else if (ending == "ぐ")	result = root + "*ぎ";
 		else if (ending == "ぶ")	result = root + "*び";
+	} else if (to == "potential") {
+		if (from == "る")			result = root + "*られる";
+		else if (ending == "う")	result = root + "*える";
+		else if (ending == "く")	result = root + "*ける";
+		else if (ending == "す")	result = root + "*せる";
+		else if (ending == "つ")	result = root + "*てる";
+		else if (ending == "ぬ")	result = root + "*ねる";
+		else if (ending == "ふ")	result = root + "*へる";
+		else if (ending == "む")	result = root + "*める";
+		else if (ending == "る")	result = root + "*れる";
+		else if (ending == "ぐ")	result = root + "*げる";
+		else if (ending == "ぶ")	result = root + "*べる";
 	}
 
-	if (suffix != null)
+	if (suffix != null && suffix != "")
 		result += suffix;
 
 	return result;
@@ -504,6 +527,10 @@ onMounted(async () => {
 			<p v-if="displayWord.t_form">
 				{{ t('word_page.t_form') }}:
 				<span v-html="displayWord.t_form"></span>
+			</p>
+			<p v-if="displayWord.potential">
+				{{ t('word_page.potential') }}:
+				<span v-html="displayWord.potential"></span>
 			</p>
 
 			<table v-if="Object.keys(displayWord).length">

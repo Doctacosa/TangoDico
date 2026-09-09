@@ -34,6 +34,7 @@ const messages = {
 		word_page: {
 			infinitive: "Infinitive / dictionary",
 			t_form: "-t form",
+			potential: "Potential form",
 			positive: "Positive",
 			negative: "Negative",
 			present: "Non-past",
@@ -101,6 +102,7 @@ const messages = {
 		word_page: {
 			infinitive: "Infinitif / dictionnaire",
 			t_form: "Forme en -te",
+			potential: "Forme potentielle",
 			positive: "Affirmatif",
 			negative: "Négatif",
 			present: "Non-passé",
