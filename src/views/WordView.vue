@@ -46,6 +46,7 @@ type Tenses = {
 	},
 	't_form': StrOrNull,
 	'potential': StrOrNull,
+	'volitive': StrOrNull,
 	'word': StrOrNull,
 };
 
@@ -120,6 +121,7 @@ function getConjugation(wordData: MatchType | null) {
 		},
 		't_form': null,
 		'potential': null,
+		'volitive': null,
 		'word': wordData.kana,
 	};
 
@@ -149,6 +151,7 @@ function getConjugation(wordData: MatchType | null) {
 				//t-form
 				't_form': root + "*て",
 				'potential': changeEnding(wordData.kana, "る", "potential"),
+				'volitive': changeEnding(wordData.kana, "る", "volitive"),
 				'word': wordData.kana,
 			}
 
@@ -177,6 +180,7 @@ function getConjugation(wordData: MatchType | null) {
 				//t-form
 				't_form': root + "て",
 				'potential': changeEnding(wordData.kana, "う", "potential"),
+				'volitive': changeEnding(wordData.kana, "う", "volitive"),
 				'word': wordData.kana,
 			}
 
@@ -246,6 +250,7 @@ function getConjugation(wordData: MatchType | null) {
 				}
 				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "*して";
 				tenses.potential = wordData.kana.substring(0, wordData.kana.length - 2) + "*できる";
+				tenses.volitive = wordData.kana.substring(0, wordData.kana.length - 2) + "*しよう";
 
 			} else if (wordData.kana.endsWith("くる")) {
 				tenses.affirmative = {
@@ -270,6 +275,7 @@ function getConjugation(wordData: MatchType | null) {
 				}
 				tenses.t_form = wordData.kana.substring(0, wordData.kana.length - 2) + "*きて";
 				tenses.potential = wordData.kana.substring(0, wordData.kana.length - 2) + "*こられる";
+				tenses.volitive = wordData.kana.substring(0, wordData.kana.length - 2) + "*こよう";
 			}
 		} else {
 			console.log("Unknown subtype: " + wordData.subtype);
@@ -309,6 +315,7 @@ function getConjugation(wordData: MatchType | null) {
 				},
 				't_form': wordBase + "*くて",
 				'potential': null,
+				'volitive': null,
 				'word': wordBase,
 			};
 
@@ -344,6 +351,7 @@ function getConjugation(wordData: MatchType | null) {
 				},
 				't_form': wordBase + "*で",
 				'potential': null,
+				'volitive': null,
 				'word': wordBase,
 			};
 
@@ -376,6 +384,7 @@ function getConjugation(wordData: MatchType | null) {
 			},
 			't_form': wordData.kana + "*で",
 			'potential': null,
+			'volitive': null,
 			'word': wordData.kana,
 		};
 
@@ -463,6 +472,18 @@ function changeEnding(source: string, from: string, to: string, suffix: string =
 		else if (ending == "る")	result = root + "*れる";
 		else if (ending == "ぐ")	result = root + "*げる";
 		else if (ending == "ぶ")	result = root + "*べる";
+	} else if (to == "volitive") {
+		if (from == "る")			result = root + "*よう";
+		else if (ending == "う")	result = root + "*おう";
+		else if (ending == "く")	result = root + "*こう";
+		else if (ending == "す")	result = root + "*そう";
+		else if (ending == "つ")	result = root + "*とう";
+		else if (ending == "ぬ")	result = root + "*のう";
+		//else if (ending == "ふ")	result = root + "*";	//Doesn't exist
+		else if (ending == "む")	result = root + "*もう";
+		else if (ending == "る")	result = root + "*ろう";
+		else if (ending == "ぐ")	result = root + "*ごう";
+		else if (ending == "ぶ")	result = root + "*ぼう";
 	}
 
 	if (suffix != null && suffix != "")
@@ -531,6 +552,10 @@ onMounted(async () => {
 			<p v-if="displayWord.potential">
 				{{ t('word_page.potential') }}:
 				<span v-html="displayWord.potential"></span>
+			</p>
+			<p v-if="displayWord.volitive">
+				{{ t('word_page.volitive') }}:
+				<span v-html="displayWord.volitive"></span>
 			</p>
 
 			<table v-if="Object.keys(displayWord).length">
