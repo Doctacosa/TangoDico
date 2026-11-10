@@ -30,6 +30,13 @@ const navItems = ref< NavItemType[] >([
 		}
 	},
 	{
+		label: "nav.counters",
+		//icon: 'pi pi-link',
+		command: () => {
+			router.push('/counters');
+		}
+	},
+	{
 		label: "nav.colors",
 		//icon: 'pi pi-link',
 		command: () => {

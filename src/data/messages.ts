@@ -64,6 +64,8 @@ const messages = {
 		nav: {
 			about: "About",
 			dictionary: "Dictionary",
+			counters: "Counters",
+			counter: "Counter",
 			colors: "Colors",
 			conjugation: "Conjugation",
 			home: "Home",
@@ -133,6 +135,8 @@ const messages = {
 		nav: {
 			about: "À propos",
 			home: "Accueil",
+			counters: "Compteurs",
+			counter: "Compteur",
 			colors: "Couleurs",
 			conjugation: "Conjugaison",
 			dictionary: "Dictionnaire",

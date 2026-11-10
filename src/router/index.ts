@@ -20,6 +20,16 @@ const router = createRouter({
 			component: () => import('../views/ConjugationView.vue'),
 		},
 		{
+			path: '/counters',
+			name: 'counters',
+			component: () => import('../views/CountersView.vue'),
+		},
+		{
+			path: '/counter/:id',
+			name: 'counter',
+			component: () => import('../views/CounterView.vue'),
+		},
+		{
 			path: '/colors',
 			name: 'colors',
 			component: () => import('../views/ColorsView.vue'),
