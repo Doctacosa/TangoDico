@@ -16,8 +16,21 @@ type MatchType = {
 	meaning: string,
 }
 
+type WordType = {
+	id: number,
+	kana: string,
+	kanji: string,
+	lesson: string,
+	lesson_full: string,
+	meaning: string,
+	subtype: string,
+	type: string,
+	type_full: string,
+}
+
 const displayNumbers = ref< object >();
 let sourceWord = ref< MatchType | null >();
+let examplesList = ref();
 
 
 async function getWord(id: string) {
@@ -49,6 +62,36 @@ async function getWord(id: string) {
 	} else {
 		return null;
 	}
+}
+
+
+async function getExamples(ids) {
+	const SQL = await initSqlJs({
+		locateFile: () => `/sql-wasm.wasm`
+	});
+
+	const response = await fetch('/jpdict.db');	//Path relative to public/
+	const buffer = await response.arrayBuffer();
+	const db = new SQL.Database(new Uint8Array(buffer));
+
+
+	//Get the expected match
+	const sql = `
+		SELECT *
+		FROM words
+		INNER JOIN words__` + locale.value + ` AS words_lang
+		ON words.id = words_lang.id
+		WHERE words.id IN (` + ids.join(',') + `)
+	`;
+	const stmt = db.prepare(sql);
+	//TODO: Find why bind() doesn't work on this
+	//stmt.bind([ids.join(',')]);
+
+	const results = [];
+	while (stmt.step()) {
+		results.push(stmt.getAsObject() as WordType);
+	}
+	return results;
 }
 
 
@@ -127,6 +170,7 @@ onMounted(async () => {
 		return;
 
 	sourceWord = await getWord(wordId);
+	examplesList = await getExamples(sourceWord.examples.split(','));
 	displayNumbers.value = getCounting(sourceWord);
 });
 </script>
@@ -142,7 +186,6 @@ onMounted(async () => {
 				{{ sourceWord.kana }}
 			</h2>
 			<h3 style="text-transform: none;">{{ sourceWord.meaning }}</h3>
-			<h3 style="text-transform: none;">{{ sourceWord.examples }}</h3>
 
 		</template>
 
@@ -172,6 +215,18 @@ onMounted(async () => {
 				<tr>
 					<td>How many</td>
 					<td>{{ sourceWord.how_many }}</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						Exemples:
+						<RouterLink
+							v-for="example in examplesList"
+							:to="'/word/' + example.kana + '-' + example.id"
+							style="display: block"
+						>
+							{{ example.meaning }}
+						</RouterLink>
+					</td>
 				</tr>
 			</tbody>
 		</table>
