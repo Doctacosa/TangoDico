@@ -6,6 +6,10 @@ import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 
+const props = defineProps({
+	devMode: Boolean,
+});
+
 
 type MatchType = {
 	id: number,
@@ -220,12 +224,19 @@ onMounted(async () => {
 					<td colspan="2">
 						Exemples:
 						<RouterLink
+							v-if="props.devMode"
 							v-for="example in examplesList"
 							:to="'/word/' + example.kana + '-' + example.id"
 							style="display: block"
 						>
 							{{ example.meaning }}
 						</RouterLink>
+						<div
+							v-else
+							v-for="example in examplesList"
+						>
+							{{ example.meaning }}
+						</div>
 					</td>
 				</tr>
 			</tbody>
