@@ -12,12 +12,18 @@ const props = defineProps({
 
 
 type MatchType = {
-	id: number,
+	id: string,
 	kana: string,
 	kanji: string,
 	how_many: string,
 	examples: string,
 	meaning: string,
+}
+
+type NumberType = {
+	prefix: string,
+	suffix: string,
+	full: string,
 }
 
 type WordType = {
@@ -32,7 +38,7 @@ type WordType = {
 	type_full: string,
 }
 
-const displayNumbers = ref< object >();
+const displayNumbers = ref< {number: NumberType} >();
 let sourceWord = ref< MatchType | null >();
 let examplesList = ref();
 
@@ -69,7 +75,7 @@ async function getWord(id: string) {
 }
 
 
-async function getExamples(ids) {
+async function getExamples(ids: number[]) {
 	const SQL = await initSqlJs({
 		locateFile: () => `/sql-wasm.wasm`
 	});
@@ -99,7 +105,7 @@ async function getExamples(ids) {
 }
 
 
-const bases = {
+const bases: {[id: number]: string} = {
 	1: 'いち',
 	2: 'に',
 	3: 'さん',
@@ -113,8 +119,8 @@ const bases = {
 }
 
 
-function getCounting(wordData: MatchType | null) {
-	const numbers = {};
+function getCounting(wordData: MatchType) {
+	const numbers: {[id: number]: NumberType} = {};
 
 	for (let i = 1; i < 11; i++) {
 		let prefix = bases[i];
@@ -158,6 +164,22 @@ function getCounting(wordData: MatchType | null) {
 }
 
 
+function sortWords(words: [MatchType]) {
+	function compare(a: MatchType, b: MatchType) {
+		const s1 = a.meaning.toLowerCase();
+		const s2 = b.meaning.toLowerCase();
+		if (s1 < s2)
+			return -1;
+		if (s1 > s2)
+			return 1;
+		return 0;
+	}
+
+	//slice() to work on a copy of the list
+	return words.slice().sort(compare);
+}
+
+
 watch(locale, () => {
 });
 
@@ -174,7 +196,7 @@ onMounted(async () => {
 		return;
 
 	sourceWord = await getWord(wordId);
-	examplesList = await getExamples(sourceWord.examples.split(','));
+	examplesList = await getExamples(sourceWord.examples.split(',').filter(x => x));
 	displayNumbers.value = getCounting(sourceWord);
 });
 </script>
@@ -196,7 +218,7 @@ onMounted(async () => {
 
 		<h3>{{ t('nav.counter') }}</h3>
 
-		<table v-if="displayNumbers">
+		<table v-if="displayNumbers && sourceWord">
 			<tbody>
 				<tr v-for="value, key in displayNumbers">
 					<td>{{ key }}</td>
@@ -225,7 +247,7 @@ onMounted(async () => {
 						Exemples:
 						<RouterLink
 							v-if="props.devMode"
-							v-for="example in examplesList"
+							v-for="example in sortWords(examplesList)"
 							:to="'/word/' + example.kana + '-' + example.id"
 							style="display: block"
 						>
@@ -233,7 +255,7 @@ onMounted(async () => {
 						</RouterLink>
 						<div
 							v-else
-							v-for="example in examplesList"
+							v-for="example in sortWords(examplesList)"
 						>
 							{{ example.meaning }}
 						</div>
