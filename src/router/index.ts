@@ -30,6 +30,11 @@ const router = createRouter({
 			component: () => import('../views/CounterView.vue'),
 		},
 		{
+			path: '/number/:id',
+			name: 'number',
+			component: () => import('../views/NumberView.vue'),
+		},
+		{
 			path: '/colors',
 			name: 'colors',
 			component: () => import('../views/ColorsView.vue'),

@@ -21,6 +21,10 @@ const messages = {
 			nb_results: "results",
 			too_many_results: "The search returned too many results, only a partial list is shown.",
 		},
+		counter_page: {
+			examples: "Examples",
+			how_many: "How many",
+		},
 		word_type: {
 			adj: "Adjective",
 			adv: "Adverb",
@@ -40,6 +44,24 @@ const messages = {
 			negative: "Negative",
 			present: "Non-past",
 			past: "Past",
+		},
+		number_page: {
+			standard: {
+				title: 'Standard',
+				description: 'Regular numbers, for counting.',
+			},
+			item: {
+				title: 'Items',
+				description: 'Generic item counting.',
+			},
+			day: {
+				title: 'Days',
+				description: 'Days in a month, or number of days.',
+			},
+			people: {
+				title: 'People',
+				description: 'Number of people.',
+			},
 		},
 		about: {
 			title: "About",
@@ -66,6 +88,7 @@ const messages = {
 			dictionary: "Dictionary",
 			counters: "Counters",
 			counter: "Counter",
+			number: "Number",
 			colors: "Colors",
 			conjugation: "Conjugation",
 			home: "Home",
@@ -92,6 +115,10 @@ const messages = {
 			nb_results: "résultats",
 			too_many_results: "La recherche a retourné trop de résultats, seule une liste partielle est affichée.",
 		},
+		counter_page: {
+			examples: "Exemples",
+			how_many: "Combien",
+		},
 		word_type: {
 			adj: "Adjectif",
 			adv: "Adverbe",
@@ -111,6 +138,24 @@ const messages = {
 			negative: "Négatif",
 			present: "Non-passé",
 			past: "Passé",
+		},
+		number_page: {
+			standard: {
+				title: 'Standard',
+				description: 'Les nombres réguliers, pour compter.',
+			},
+			item: {
+				title: 'Items',
+				description: 'Décompte d\'items génériques.',
+			},
+			day: {
+				title: 'Jours',
+				description: 'Jours dans un mois, ou nombre de jours.',
+			},
+			people: {
+				title: 'Personnes',
+				description: 'Nombre de personnes.',
+			},
 		},
 		about: {
 			title: "À propos",
@@ -137,6 +182,7 @@ const messages = {
 			home: "Accueil",
 			counters: "Compteurs",
 			counter: "Compteur",
+			number: "Nombre",
 			colors: "Couleurs",
 			conjugation: "Conjugaison",
 			dictionary: "Dictionnaire",

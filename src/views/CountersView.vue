@@ -67,9 +67,37 @@ onMounted(async () => {
 
 <template>
 	<div>
-		<h2>{{ t("nav.counters") }}</h2>
+		<h2>Numbers</h2>
 
-		<p>Insert counters here</p>
+		<div class="words_list">
+			<RouterLink
+				to="/number/standard"
+			>
+				<div class="name">{{ t("number_page.standard.title") }}</div>
+			</RouterLink>
+
+			<RouterLink
+				to="/number/item"
+			>
+				<div class="name">{{ t("number_page.item.title") }}</div>
+			</RouterLink>
+
+			<RouterLink
+				to="/number/day"
+			>
+				<div class="name">{{ t("number_page.day.title") }}</div>
+			</RouterLink>
+
+			<RouterLink
+				to="/number/people"
+			>
+				<div class="name">{{ t("number_page.people.title") }}</div>
+			</RouterLink>
+
+		</div>
+
+
+		<h2>{{ t("nav.counters") }}</h2>
 
 		<div v-if="matches.length" class="words_list">
 			<RouterLink
@@ -108,13 +136,25 @@ onMounted(async () => {
 
 		.name {
 			font-weight: bold;
-			padding-bottom: 8px;
+		}
+
+		.meaning {
+			padding-top: 8px;
 		}
 
 		.p-message-content {
 			width: 100%;
 			display: block;
 		}
+	}
+
+	> *:hover {
+		border: 1px solid #888;
+		background-color: #333;
+	}
+
+	> a:hover {
+		text-decoration: none;
 	}
 }
 
