@@ -239,12 +239,12 @@ onMounted(async () => {
 					</td>
 				</tr>
 				<tr>
-					<td>How many</td>
+					<td>{{ t('counter_page.how_many') }}</td>
 					<td>{{ sourceWord.how_many }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						Exemples:
+						<label>{{ t('counter_page.examples') }}:</label>
 						<RouterLink
 							v-if="props.devMode"
 							v-for="example in sortWords(examplesList)"
@@ -277,5 +277,11 @@ table {
 		font-size: 110%;
 		padding: 4px;
 	}
+}
+
+
+label {
+	display: inline-block;
+	padding: 4px;
 }
 </style>
